@@ -1,11 +1,10 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 
-const { fieldValidation, hasRole } = require("../middlewares");
+const { fieldValidation, validateJWT, hasRole } = require("../middlewares");
 const {
   emailExists,
-  userExistsById,
-  userAlreadyDeleted,
+  userExistsById
 } = require("../helpers");
 
 const {
@@ -53,12 +52,12 @@ router.post(
   usersPost
 );
 
-// TODO: Validate individual fields if are included
+// TODO: Validate individual fields if are included, validate if user to modify is current user (unless he is admin or editor)
 router.put(
   "/:id",
   [
-    //validateJWT,
-    // hasRole("admin", "editor"),
+    validateJWT,
+    hasRole("admin", "editor"),
     check("id", "Invalid user ID.").isMongoId(),
     fieldValidation,
     check("id").custom(userExistsById),
@@ -67,11 +66,12 @@ router.put(
   usersPut
 );
 
+//TODO: User to be deleted doesn't contain a superior role
 router.delete(
   "/:id",
   [
-    //validateJWT,
-    // hasRole("admin", "editor"),
+    validateJWT,
+    hasRole("admin", "editor"),
     check("id", "Invalid user ID.").isMongoId(),
     fieldValidation,
     check("id").custom(userExistsById),

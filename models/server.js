@@ -11,6 +11,7 @@ class Server {
 
     this.paths = {
       users: "/api/users",
+      auth: "/api/auth"
     };
 
     this.connectDB();
@@ -35,6 +36,7 @@ class Server {
 
   routes() {
     this.app.use(this.paths.users, require("../routes/users.js"));
+    this.app.use(this.paths.auth, require("../routes/auth.js"));
   }
 
   listen() {
