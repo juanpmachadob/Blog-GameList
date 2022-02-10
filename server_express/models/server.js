@@ -29,9 +29,6 @@ class Server {
 
     // Parse and read from body
     this.app.use(express.json());
-
-    // Public directory
-    this.app.use(express.static("public"));
   }
 
   routes() {
