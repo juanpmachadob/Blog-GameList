@@ -12,18 +12,15 @@
   --color-text: #54585e;
 
 
-  --color-light: #e6ebf1;
+  --color-light: #dddddd;
   --color-dark: #404449;
 
 
   --color-white: #ffffff;
-  --color-primary: #6B00D7;
+  --color-primary: #6b00d7;
   --color-secondary: #0F0F11;
   --font-title: 'Rubik', sans-serif;
   --font-text: 'Lato', sans-serif;
-
-
-  --main-border: rgba(0, 0, 0, .125);
   --main-shadow: 0 6px 15px rgb(36 37 38 / 10%);
 }
 
@@ -40,7 +37,7 @@ html {
 body {
   margin-top: 5rem;
   font-family: var(--font-text);
-  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  background-image: linear-gradient(90deg, #fdfbfb 0%, #ebedee 100%);
 }
 
 /* Utilities */
@@ -49,10 +46,6 @@ body {
   width: 95%;
   max-width: 1400px;
   margin: 0 auto;
-}
-
-.center {
-  text-align: center;
 }
 
 .flex-column {
@@ -79,7 +72,7 @@ img {
 h1 {
   font-size: 3.75rem;
   font-family: var(--font-title);
-  margin: 1rem 0;
+  margin: 0 0 1rem 0;
 }
 
 h2 {
@@ -89,7 +82,7 @@ h2 {
 }
 
 h3 {
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   margin: 0 0 0.5rem 0;
 }
 
@@ -100,35 +93,41 @@ p {
   color: var(--color-text);
 }
 
-section,
-main {
-  padding: 4rem 0;
-}
-
 .btn {
   display: inline-block;
   border: 0.125rem solid;
   color: #fff;
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   font-size: 1.05rem;
   text-transform: uppercase;
-  transition: all 0.3s;
   margin-top: 1rem;
   border-radius: 100px;
   -webkit-border-radius: 100px;
   -moz-border-radius: 100px;
   -ms-border-radius: 100px;
   -o-border-radius: 100px;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
 }
 
 .btn:hover {
-  transform: scale(1.05);
   cursor: pointer;
-  color: var(--color-text);
+  transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  -o-transform: scale(1.05);
 }
 
 .btn:active {
   transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -moz-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  -o-transform: scale(0.95);
 }
 
 .btn-primary {
@@ -146,6 +145,7 @@ main {
   width: 100%;
   top: 0;
   z-index: 10;
+  box-shadow: var(--main-shadow);
 }
 
 .navbar-content {
@@ -229,6 +229,120 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 /* Content */
+
+main {
+  padding-top: 2rem;
+}
+
+.popular-games {
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.game-item {
+  flex-basis: calc(25% - 1rem);
+  background-color: white;
+  border-radius: 2rem;
+  -webkit-border-radius: 2rem;
+  -moz-border-radius: 2rem;
+  -ms-border-radius: 2rem;
+  -o-border-radius: 2rem;
+}
+
+.game-image {
+  margin: 0;
+}
+
+.game-image {
+  position: relative;
+}
+
+.game-image img {
+  max-width: 100%;
+  border-radius: 2rem 2rem 0 0;
+  -webkit-border-radius: 2rem 2rem 0 0;
+  -moz-border-radius: 2rem 2rem 0 0;
+  -ms-border-radius: 2rem 2rem 0 0;
+  -o-border-radius: 2rem 2rem 0 0;
+}
+
+.game-image figcaption {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: .85rem .85rem 0 0;
+  background-color: rgba(107, 0, 215, .75);
+  color: white;
+  padding: .1rem .75rem;
+  font-size: 1.25rem;
+  border-radius: 2rem;
+  -webkit-border-radius: 2rem;
+  -moz-border-radius: 2rem;
+  -ms-border-radius: 2rem;
+  -o-border-radius: 2rem;
+}
+
+.game-image figcaption.liked {
+  background-color: rgba(76, 175, 80, .75);
+}
+
+.game-image figcaption i {
+  color: #f3d31f;
+  font-size: .75rem;
+  position: relative;
+  top: -2px;
+}
+
+.game-description {
+  padding: 1rem;
+}
+
+.game-description div {
+  display: flex;
+  justify-content: end;
+}
+
+.pagination {
+  display: flex;
+  justify-content: end;
+  margin: 1rem 0 2rem 0;
+}
+
+.pagination a {
+  padding: .75rem 1.25rem;
+  margin-left: 1rem;
+  border: 2px solid var(--color-light);
+  transition: all .3s;
+  -webkit-transition: all .3s;
+  -moz-transition: all .3s;
+  -ms-transition: all .3s;
+  -o-transition: all .3s;
+  border-radius: 1.25rem;
+  -webkit-border-radius: 1.25rem;
+  -moz-border-radius: 1.25rem;
+  -ms-border-radius: 1.25rem;
+  -o-border-radius: 1.25rem;
+}
+
+.pagination a:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+  transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  -o-transform: scale(1.05);
+}
+
+.pagination a:active {
+  transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -moz-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  -o-transform: scale(0.95);
+}
 
 /* Media queries */
 
