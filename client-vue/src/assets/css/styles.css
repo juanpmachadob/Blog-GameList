@@ -4,16 +4,25 @@
 :root {
   --color-background-first: #f9f9f9;
   --color-background-second: #f5f8fa;
-  --color-light: #e6ebf1;
   --color-form-input: #eaeaea;
   --color-background-projects-hover: rgba(255, 255, 255, 0.75);
+
+
   --color-title: #2c3e50;
   --color-text: #54585e;
+
+
+  --color-light: #e6ebf1;
+  --color-dark: #404449;
+
+
   --color-white: #ffffff;
-  --color-primary: #008cff;
-  --color-secondary: #F84855;
+  --color-primary: #6B00D7;
+  --color-secondary: #0F0F11;
   --font-title: 'Rubik', sans-serif;
   --font-text: 'Lato', sans-serif;
+
+
   --main-border: rgba(0, 0, 0, .125);
   --main-shadow: 0 6px 15px rgb(36 37 38 / 10%);
 }
@@ -29,21 +38,16 @@ html {
 }
 
 body {
-  margin-top: 4.2rem;
+  margin-top: 5rem;
   font-family: var(--font-text);
-  background-color: var(--color-background-first);
-  /* background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); */
-  /* background-image: linear-gradient(to right, #fdfbfb 0%, #f9f9f9 100%); */
-  /* background-image: linear-gradient(180, red 0%, blue 100%); */
-  color: var(--color-title);
-
+  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 }
 
 /* Utilities */
 
 .container {
   width: 95%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -101,28 +105,6 @@ main {
   padding: 4rem 0;
 }
 
-
-.navbar .search-btn{
-  display: none;
-}
-
-.search-btn {
-  border: 0.125rem solid;
-  padding: 0.5rem 1rem;
-  margin-right: 1rem;
-  font-size: 1rem;
-  border-radius: 25px;
-  -webkit-border-radius: 25px;
-  -moz-border-radius: 25px;
-  -ms-border-radius: 25px;
-  -o-border-radius: 25px;
-}
-
-.navbar .search i{
-  font-size: 1.25rem;
-  margin-right: 1rem;
-}
-
 .btn {
   display: inline-block;
   border: 0.125rem solid;
@@ -157,7 +139,7 @@ main {
 /* Navbar */
 
 .navbar {
-  background-color: var(--color-white);
+  background-color: var(--color-secondary);
   font-family: var(--font-title);
   padding: 1.25rem 0;
   position: fixed;
@@ -178,22 +160,41 @@ main {
   align-items: center;
 }
 
+.navbar a, .navbar i {
+  color: var(--color-white);
+}
+
+.navbar .search-btn {
+  display: none;
+}
+
+.search-btn {
+  border: 0.125rem solid;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  font-size: 1rem;
+  border-radius: 25px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  -ms-border-radius: 25px;
+  -o-border-radius: 25px;
+}
+
+.navbar .search i {
+  cursor: pointer;
+  font-size: 1.25rem;
+  margin-right: 1rem;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
 .logo {
   font-size: 1.5rem;
-  justify-content: left;
-  color: var(--color-title);
-}
-
-.mobile{
-  display: flex;
-  align-items: center;
-}
-
-.mobile-menu {
-  border-left: 1px solid var(--color-light);
-  padding-left: 1rem;
-  font-size: 1.5rem;
-  cursor: pointer;
 }
 
 .navigation {
@@ -203,20 +204,27 @@ main {
   align-items: center;
 }
 
-.mobile-menu-active {
-  display: none;
+.mobile {
+  display: flex;
+  align-items: center;
 }
 
-.nav-item {
-  display: inline-block;
-  color: var(--color-title);
+.mobile-menu {
+  border-left: 1px solid var(--color-dark);
+  padding-left: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.mobile-menu-active {
+  display: none;
 }
 
 .nav-item {
   padding: 0.5rem 0;
 }
 
-.mobile-menu:hover {
+.nav-item:hover, .search i:hover, .mobile-menu i:hover {
   color: var(--color-primary);
 }
 
@@ -233,17 +241,29 @@ main {
     display: none;
   }
 
-  .navbar .search-btn{
+  .navbar .search-btn {
     display: inline-block;
   }
 
-  .search i{
+  .search {
+    position: relative;
+  }
+
+  .search i {
+    color: var(--color-dark);
+    right: 0;
     position: absolute;
     font-size: 1rem;
+    padding: .55rem .75rem 0 0;
+    border-radius: 0.5rem;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem;
   }
 
   .navigation {
-    border-left: 1px solid var(--color-light);
+    border-left: 1px solid var(--color-dark);
     margin-top: 0;
     display: flex;
     flex-direction: row;

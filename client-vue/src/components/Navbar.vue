@@ -5,7 +5,7 @@
         <a href="#" class="logo">My Game List</a>
         <div class="mobile">
           <div class="search">
-            <input class="search-btn" type="search" placeholder="Search..." />
+            <input class="search-btn" type="search" placeholder="Search..." aria-valuemax="10"/>
             <i class="fa-solid fa-magnifying-glass"></i>
           </div>
           <div class="mobile-menu">
