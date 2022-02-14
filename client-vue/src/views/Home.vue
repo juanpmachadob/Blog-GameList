@@ -8,8 +8,8 @@
           temporibus.
         </p>
       </div>
-      <div class="popular-games flex-row">
-        <div v-for="index in 4" :key="index" class="game-item">
+      <div class="popular-games flex-row" id="game-overflow">
+        <div v-for="index in 10" :key="index" class="game-item">
           <figure class="game-image">
             <img
               src="@/assets/images/jumping-planet.jpg"
@@ -27,8 +27,8 @@
         </div>
       </div>
       <div class="pagination">
-        <a href="#">❮</a>
-        <a href="#">❯</a>
+        <a href="#" @click="moveOverflow(-80)">❮</a>
+        <a href="#" @click="moveOverflow(80)">❯</a>
       </div>
     </div>
   </main>
@@ -37,5 +37,12 @@
 <script>
 export default {
   name: "Home",
+  methods: {
+    moveOverflow: (pixels) => {
+      let popularGames = document.querySelector("#game-overflow");
+      popularGames.scrollLeft += pixels;
+      event.preventDefault();
+    },
+  },
 };
 </script>

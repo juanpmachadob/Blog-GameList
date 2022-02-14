@@ -2,6 +2,30 @@ const bcryptjs = require("bcryptjs");
 const { generateJWT } = require("../helpers");
 const User = require("../models/user");
 
+const register = async (req, res) => {
+  const { name, email, password } = req.body;
+  const user = new User({
+    name,
+    email,
+    password,
+    role: "user",
+  });
+
+  // Encrypt password
+  const salt = bcryptjs.genSaltSync();
+  user.password = bcryptjs.hashSync(password, salt);
+
+  await user.save();
+  
+  // Generate JWT
+  const token = await generateJWT(user.id);
+
+  res.json({
+    user,
+    token,
+  });
+};
+
 const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -45,5 +69,6 @@ const login = async (req, res) => {
 };
 
 module.exports = {
+  register,
   login,
 };

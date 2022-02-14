@@ -20,10 +20,9 @@ const usersGetByID = async (req, res) => {
 };
 
 const usersPost = async (req, res) => {
-  const { firstname, lastname, email, password, role } = req.body;
+  const { name, email, password, role } = req.body;
   const user = new User({
-    firstname,
-    lastname,
+    name,
     email,
     password,
     role,

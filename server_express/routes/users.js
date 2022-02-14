@@ -2,10 +2,7 @@ const { Router } = require("express");
 const { check } = require("express-validator");
 
 const { fieldValidation, validateJWT, hasRole } = require("../middlewares");
-const {
-  emailExists,
-  userExistsById
-} = require("../helpers");
+const { emailExists, userExistsById } = require("../helpers");
 
 const {
   usersGet,
@@ -34,8 +31,7 @@ router.get(
 router.post(
   "/",
   [
-    check("firstname", "First name is required.").not().isEmpty(),
-    check("lastname", "Last name is required.").not().isEmpty(),
+    check("name", "Name is required.").not().isEmpty(),
     check(
       "password",
       "Password must be at least 8 characters long and must contain letters in mixed case, numbers and special characters."
