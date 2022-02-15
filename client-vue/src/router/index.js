@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import store from "../store";
 
 const routes = [
   {
@@ -15,12 +16,23 @@ const routes = [
     path: "/auth/register",
     name: "Register",
     component: () => import("../views/Auth/Register.vue"),
+    meta: { requiresAuth: true },
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const authRequired = to.matched.some((item) => item.meta.requiresAuth);
+
+  if (authRequired && store.state.token === null) {
+    next("/");
+  } else {
+    next();
+  }
 });
 
 export default router;

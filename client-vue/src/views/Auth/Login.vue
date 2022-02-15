@@ -2,7 +2,7 @@
   <section class="login">
     <div class="container">
       <div class="card">
-        <form class="card-white" @submit.prevent="login()">
+        <form class="card-white" @submit.prevent="login(user)">
           <h2>Log in</h2>
           <div class="form-item">
             <label for="email">Email</label>
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import Storage from "../../utilities/Storage";
+import { mapActions } from "vuex";
 export default {
   name: "Login",
   data: () => ({
@@ -44,11 +44,12 @@ export default {
     },
   }),
   methods: {
+    ...mapActions(["saveToken"]),
     login() {
       this.axios
         .post("/auth/login", this.user)
         .then((res) => {
-          Storage.record("x-token", res.data.token);
+          this.saveToken();
           this.$router.push("/");
         })
         .catch((err) => {

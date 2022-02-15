@@ -52,7 +52,7 @@
 
 
 <script>
-import Storage from "../../utilities/Storage";
+import { mapActions } from "vuex";
 export default {
   name: "Register",
   data: () => ({
@@ -65,11 +65,12 @@ export default {
     errors: {},
   }),
   methods: {
+    ...mapActions(["saveToken"]),
     register() {
       this.axios
         .post("/auth/register", this.user)
         .then((res) => {
-          Storage.record("x-token", res.data.token);
+          this.saveToken();
           this.$router.push("/");
         })
         .catch((err) => {
