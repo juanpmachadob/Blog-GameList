@@ -49,7 +49,7 @@ export default {
       this.axios
         .post("/auth/login", this.user)
         .then((res) => {
-          this.saveToken();
+          this.saveToken(res.data.token);
           this.$router.push("/");
         })
         .catch((err) => {
