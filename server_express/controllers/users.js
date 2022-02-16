@@ -1,5 +1,5 @@
 const bcryptjs = require("bcryptjs");
-const User = require("../models/user.js");
+const User = require("../models/user");
 
 const usersGet = async (req, res) => {
   const { limit = 10 } = req.query;
