@@ -11,7 +11,6 @@ const GameSchema = Schema({
   },
   img: {
     type: String,
-    required: [true, "Image is required"]
   },
   likes: {
     type: Number,

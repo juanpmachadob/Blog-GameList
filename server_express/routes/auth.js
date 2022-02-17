@@ -8,6 +8,7 @@ const { register, login } = require("../controllers/auth");
 
 const router = Router();
 
+//TODO: matching passwords
 router.post(
   "/register",
   [

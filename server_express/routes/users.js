@@ -40,7 +40,6 @@ router.post(
     check("email").custom(emailExists),
     check("role", `Role must be: admin | editor | user`).isIn([
       "admin",
-      "editor",
       "user",
     ]),
     fieldValidation,
@@ -53,7 +52,7 @@ router.put(
   "/:id",
   [
     validateJWT,
-    hasRole("admin", "editor"),
+    hasRole("admin"),
     check("id", "Invalid user ID.").isMongoId(),
     fieldValidation,
     check("id").custom(userExistsById),
@@ -67,7 +66,7 @@ router.delete(
   "/:id",
   [
     validateJWT,
-    hasRole("admin", "editor"),
+    hasRole("admin"),
     check("id", "Invalid user ID.").isMongoId(),
     fieldValidation,
     check("id").custom(userExistsById),
