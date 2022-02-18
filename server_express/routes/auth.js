@@ -8,7 +8,6 @@ const { register, login } = require("../controllers/auth");
 
 const router = Router();
 
-//TODO: matching passwords
 router.post(
   "/register",
   [
@@ -17,7 +16,9 @@ router.post(
       "password",
       "Password must be at least 8 characters long and must contain letters in mixed case, numbers and special characters."
     ).isStrongPassword(),
-    // matchingPasswords,
+    check("passwordConfirmation", "Passwords don't match.").custom(
+      (value, { req }) => value === req.body.password
+    ),
     check("email", "Invalid email.").isEmail(),
     check("email").custom(emailExists),
     fieldValidation,

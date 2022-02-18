@@ -13,7 +13,7 @@ const { validateJWT, fieldValidation, hasRole } = require("../middlewares");
 const {
   categoryExistsById,
   gameExistsById,
-  isPropietary
+  isAdminOrPropietary,
 } = require("../helpers/database-validators");
 
 const router = Router();
@@ -44,13 +44,11 @@ router.post(
   gamesPost
 );
 
-// TODO: Check if is admin OR if is who added the game
 router.put(
   "/:id",
   [
     validateJWT,
-    hasRole("admin"),
-    isPropietary,
+    isAdminOrPropietary,
     check("id", "Invalid game ID.").isMongoId(),
     fieldValidation,
     check("id").custom(gameExistsById),
@@ -59,13 +57,11 @@ router.put(
   gamesPut
 );
 
-// TODO: Check if is admin OR if is who added the game
 router.delete(
   "/:id",
   [
     validateJWT,
-    hasRole("admin"),
-    isPropietary,
+    isAdminOrPropietary,
     check("id", "Invalid game ID.").isMongoId(),
     fieldValidation,
     check("id").custom(gameExistsById),

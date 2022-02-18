@@ -34,10 +34,33 @@ const gameExistsById = async (id = "") => {
 };
 
 const isPropietary = async (req, res, next) => {
+  if (!req.user) {
+    return res.status(500).json({
+      msg: "Can't validate role if token is not validated.",
+    });
+  }
   const game = await Game.findById(req.params.id).populate("user");
   if (game.user.id !== req.user.id) {
     return res.status(400).json({
       msg: "You are not the user who registered this game.",
+    });
+  }
+  next();
+};
+
+const isAdminOrPropietary = async (req, res, next) => {
+  if (!req.user) {
+    return res.status(500).json({
+      msg: "Can't validate role if token is not validated.",
+    });
+  }
+
+  const game = await Game.findById(req.params.id).populate("user");
+
+  roles = ["admin"];
+  if ((game.user.id !== req.user.id) && (!roles.includes(req.user.role))) {
+    return res.status(401).json({
+      msg: `Insufficient privileges.`,
     });
   }
   next();
@@ -49,4 +72,5 @@ module.exports = {
   categoryExistsById,
   gameExistsById,
   isPropietary,
+  isAdminOrPropietary,
 };
