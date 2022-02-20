@@ -1,7 +1,7 @@
 <template>
   <section class="register">
     <div class="container">
-      <div class="card">
+      <div class="multi-card">
         <form class="card-white" @submit.prevent="register()">
           <h2>Create account</h2>
           <div class="form-item">
@@ -23,12 +23,12 @@
               />
             </div>
             <div class="form-item">
-              <label for="confirmPassword">Confirm password</label>
+              <label for="passwordConfirmation">Confirm password</label>
               <input
                 type="password"
-                v-model="user.confirmPassword"
-                name="confirmPassword"
-                id="confirmPassword"
+                v-model="user.passwordConfirmation"
+                name="passwordConfirmation"
+                id="passwordConfirmation"
               />
             </div>
           </div>
@@ -41,7 +41,7 @@
           <p>
             If you already have an account, please login with your information.
           </p>
-          <router-link :to="{ name: 'Login' }" class="btn btn-secondary"
+          <router-link :to="{ name: 'login' }" class="btn btn-secondary"
             >Sign In</router-link
           >
         </div>
@@ -57,10 +57,10 @@ export default {
   name: "Register",
   data: () => ({
     user: {
-      name: "Test 1",
-      email: "prueba@test.com",
-      password: "Abc123456.",
-      confirmPassword: "Abc123456.",
+      name: "",
+      email: "",
+      password: "",
+      passwordConfirmation: "",
     },
     errors: {},
   }),

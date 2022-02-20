@@ -76,7 +76,7 @@ h1 {
 }
 
 h2 {
-  font-size: 2.25rem;
+  font-size: 2.9rem;
   font-family: var(--font-title);
   margin: 0 0 1rem 0;
 }
@@ -133,6 +133,11 @@ p {
 .btn-primary {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
+}
+
+.btn-secondary {
+  background-color: var(--color-dark);
+  border-color: var(--color-dark);
 }
 
 /* Navbar */
@@ -231,27 +236,33 @@ input[type="search"]::-webkit-search-results-decoration {
 /* Content */
 
 main, section {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.description {
+  margin-bottom: 2rem;
 }
 
 .popular-games {
   justify-content: space-between;
-  margin-top: 2rem;
   overflow-x: hidden;
 }
 
-.game-item {
-  flex-basis: calc(50% - 1rem);
+.popular-games .game-item {
+  margin-right: 2rem;
   flex-grow: 0;
   flex-shrink: 0;
+}
+
+.game-item {
   background-color: white;
   border-radius: 2rem;
-  margin-right: 2rem;
   -webkit-border-radius: 2rem;
   -moz-border-radius: 2rem;
   -ms-border-radius: 2rem;
   -o-border-radius: 2rem;
+  box-shadow: var(--main-shadow);
 }
 
 .game-image {
@@ -349,9 +360,27 @@ main, section {
   -o-transform: scale(0.95);
 }
 
+/* Game list */
+
+.container .game-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.container .game-list .game-item {
+  flex-basis: calc(33% - 1rem);
+  margin-bottom: 2rem;
+}
+
+.game-item {
+  flex-basis: 100%;
+}
+
 /* Auth forms */
 
-.card {
+.multi-card, .card {
   max-width: 1000px;
   margin-right: auto;
   margin-left: auto;
@@ -405,6 +434,18 @@ main, section {
 
 /* Forms */
 
+.card {
+  max-width: 800px;
+  background-color: var(--color-white);
+  padding: 2rem;
+  box-shadow: var(--main-shadow);
+  border-radius: 2rem;
+  -webkit-border-radius: 2rem;
+  -moz-border-radius: 2rem;
+  -ms-border-radius: 2rem;
+  -o-border-radius: 2rem;
+}
+
 .form-50 {
   width: 100%;
   display: flex;
@@ -413,7 +454,8 @@ main, section {
 }
 
 form label,
-form input {
+form input,
+form select {
   display: block;
 }
 
@@ -433,7 +475,8 @@ form .btn {
 }
 
 form input:not(.btn),
-form textarea {
+form textarea, 
+form select {
   width: 100%;
   border: 0;
   color: var(--color-text);
@@ -448,6 +491,24 @@ form textarea {
   -o-border-radius: 100px;
 }
 
+form select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+}
+
+form input::file-selector-button {
+  display: none;
+}
+form input[type="file"] {
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M447.1 32h-384C28.64 32-.01 60.65-.01 96v320c0 35.35 28.65 64 63.1 64h384c35.35 0 64-28.65 64-64V96c.01-35.35-27.79-64-63.99-64zm-336 64c26.51 0 48 21.49 48 48s-20.6 48-48 48-48-21.49-48-48 22.38-48 48-48zm335 311.6c-2.8 5.2-8.2 8.4-14.1 8.4H82.01a15.993 15.993 0 0 1-14.26-8.75 16 16 0 0 1 1.334-16.68l70-96C142.1 290.4 146.9 288 152 288s9.916 2.441 12.93 6.574l32.46 44.51 93.3-139.1C293.7 194.7 298.7 192 304 192s10.35 2.672 13.31 7.125l128 192c3.29 4.875 3.59 11.175.79 16.475z'/%3E%3C/svg%3E");
+}
+
 span.or {
   color: var(--color-text);
   display: block;
@@ -457,7 +518,11 @@ span.or {
 /* Media queries */
 
 @media (min-width: 620px) {
-  .register .card {
+  .game-item {
+    flex-basis: calc(50% - 1rem);
+  }
+
+  .register .multi-card {
     flex-direction: row;
   }
 
@@ -468,9 +533,9 @@ span.or {
     -ms-border-radius: 0 2rem 2rem 0;
     -o-border-radius: 0 2rem 2rem 0;
     -webkit-border-radius: 0 2rem 2rem 0;
-}
+  }
 
-  .login .card {
+  .login .multi-card {
     flex-direction: row-reverse;
   }
 
@@ -531,15 +596,20 @@ span.or {
   }
 
   .game-item {
-    flex-basis: calc(25% - 1rem);
+    flex-basis: calc(33% - 1rem);
   }
 }
 
 @media (min-width: 860px) {
-  .form-50{
+  .form-50 {
     flex-direction: row;
   }
+
   .form-50 .form-item {
     flex-basis: calc(50% - .5rem);
+  }
+
+  .game-item {
+    flex-basis: calc(25% - 1rem);
   }
 }

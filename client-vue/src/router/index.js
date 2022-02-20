@@ -4,18 +4,23 @@ import store from "../store";
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "home",
     component: () => import("../views/Home.vue"),
   },
   {
     path: "/auth/login",
-    name: "Login",
+    name: "login",
     component: () => import("../views/Auth/Login.vue"),
   },
   {
     path: "/auth/register",
-    name: "Register",
+    name: "register",
     component: () => import("../views/Auth/Register.vue"),
+  },
+  {
+    path: "/games/add",
+    name: "games.add",
+    component: () => import("../views/Games/Add.vue"),
     meta: { requiresAuth: true },
   },
 ];

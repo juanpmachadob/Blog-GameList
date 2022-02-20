@@ -1,7 +1,7 @@
 <template>
   <section class="login">
     <div class="container">
-      <div class="card">
+      <div class="multi-card">
         <form class="card-white" @submit.prevent="login(user)">
           <h2>Log in</h2>
           <div class="form-item">
@@ -24,7 +24,7 @@
         <div class="card-color">
           <h2>New here?</h2>
           <p>Sign up with your data and get started with us.</p>
-          <router-link :to="{ name: 'Register' }" class="btn btn-secondary"
+          <router-link :to="{ name: 'register' }" class="btn btn-secondary"
             >Sign Up</router-link
           >
         </div>
