@@ -3,6 +3,7 @@ const { check } = require("express-validator");
 
 const {
   gamesGet,
+  gamesGetPopular,
   gamesGetById,
   gamesPost,
   gamesPut,
@@ -19,6 +20,8 @@ const {
 const router = Router();
 
 router.get("/", gamesGet);
+
+router.get("/popular", gamesGetPopular);
 
 router.get(
   "/:id",
@@ -47,6 +50,7 @@ router.post(
 router.put(
   "/:id",
   [
+    // check("title").exists().if()
     validateJWT,
     isAdminOrPropietary,
     check("id", "Invalid game ID.").isMongoId(),

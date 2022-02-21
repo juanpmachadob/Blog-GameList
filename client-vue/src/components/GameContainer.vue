@@ -6,7 +6,10 @@
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, nemo!
       </p>
     </div>
-    <router-link v-if="token" :to="{ name: 'games.add' }" class="btn btn-primary"
+    <router-link
+      v-if="token"
+      :to="{ name: 'games.add' }"
+      class="btn btn-primary"
       >Add new game</router-link
     >
     <div class="game-list">
@@ -19,28 +22,35 @@
         :likes="game.likes"
       />
     </div>
+    <Paginator :key="total" :total="total" :limit="limit" @updatePage="getGames()" />
   </section>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import GameItem from "@/components/GameItem.vue";
+import Paginator from "@/components/Paginator.vue";
 export default {
   name: "GameContainer",
   components: {
     GameItem,
+    Paginator,
   },
   data: () => ({
+    total: 0,
+    limit: 10,
     games: [],
   }),
   mounted() {
     this.getGames();
   },
   methods: {
-    getGames() {
-      this.axios
-        .get("/games")
+    async getGames() {
+      const page = parseInt(this.$route.query.page) || 1;
+      await this.axios
+        .get(`/games?page=${page}&limit=${this.limit}`)
         .then((res) => {
+          this.total = res.data.total;
           this.games = res.data.games;
         })
         .catch((err) => {

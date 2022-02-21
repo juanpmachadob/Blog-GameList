@@ -1,15 +1,25 @@
 const Game = require("../models/game");
 
 const gamesGet = async (req, res) => {
-  const { limit = 10 } = req.query;
+  const { page = 1, limit = 10 } = req.query;
+  const skipIndex = (Number(page) - 1) * limit;
   const query = { status: true };
 
   const [total, games] = await Promise.all([
     Game.countDocuments(query),
-    Game.find(query).limit(Number(limit)),
+    Game.find(query).limit(Number(limit)).skip(skipIndex),
   ]);
 
   res.json({ total, games });
+};
+
+const gamesGetPopular = async (req, res) => {
+  const { limit = 10 } = req.query;
+  const query = { status: true };
+
+  const games = await Game.find(query).sort({ likes: -1 }).limit(Number(limit));
+
+  res.json({ games });
 };
 
 const gamesGetById = async (req, res) => {
@@ -64,8 +74,9 @@ const gamesDelete = async (req, res) => {
 
 module.exports = {
   gamesGet,
+  gamesGetPopular,
   gamesGetById,
   gamesPost,
   gamesPut,
-  gamesDelete
+  gamesDelete,
 };
