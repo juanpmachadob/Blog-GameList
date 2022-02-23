@@ -5,13 +5,13 @@
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, nemo!
       </p>
+      <router-link
+        v-if="token"
+        :to="{ name: 'games.add' }"
+        class="btn btn-primary"
+        >Add new game</router-link
+      >
     </div>
-    <router-link
-      v-if="token"
-      :to="{ name: 'games.add' }"
-      class="btn btn-primary"
-      >Add new game</router-link
-    >
     <div class="game-list">
       <GameItem
         v-for="(game, key) in games"
@@ -22,7 +22,12 @@
         :likes="game.likes"
       />
     </div>
-    <Paginator :key="total" :total="total" :limit="limit" @updatePage="getGames()" />
+    <Paginator
+      :key="total"
+      :total="total"
+      :limit="limit"
+      @updatePage="getGames()"
+    />
   </section>
 </template>
 

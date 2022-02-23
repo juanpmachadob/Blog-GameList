@@ -58,12 +58,22 @@ const isAdminOrPropietary = async (req, res, next) => {
   const game = await Game.findById(req.params.id).populate("user");
 
   roles = ["admin"];
-  if ((game.user.id !== req.user.id) && (!roles.includes(req.user.role))) {
+  if (game.user.id !== req.user.id && !roles.includes(req.user.role)) {
     return res.status(401).json({
       msg: `Insufficient privileges.`,
     });
   }
   next();
+};
+
+const allowedCollections = (collection = "", collections = []) => {
+  const included = collections.includes(collection);
+  if (!included) {
+    throw new Error(
+      `Collection: ${collection} not allowed - Only ${collections}`
+    );
+  }
+  return true;
 };
 
 module.exports = {
@@ -73,4 +83,5 @@ module.exports = {
   gameExistsById,
   isPropietary,
   isAdminOrPropietary,
+  allowedCollections,
 };

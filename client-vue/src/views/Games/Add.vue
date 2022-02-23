@@ -31,10 +31,15 @@
             </select>
           </div>
           <div class="form-item">
-            <label for="image">Description</label>
-            <input type="file" name="image" id="image" />
+            <label for="file">Image file</label>
+            <input
+              @change="handleFileUpload($event)"
+              type="file"
+              name="file"
+              id="file"
+            />
           </div>
-          <div class="form-50">
+          <div class="form-50 buttons">
             <router-link :to="{ name: 'home' }" class="btn btn-secondary"
               >Back</router-link
             >
@@ -54,13 +59,17 @@ export default {
       description: "",
       category: "",
     },
-    image: null,
+    file: null,
     categories: [],
   }),
   mounted() {
     this.getCategories();
   },
   methods: {
+    handleFileUpload(event) {
+      this.file = event.target.files[0];
+      console.log(this.file);
+    },
     getCategories() {
       this.axios
         .get("/categories")
@@ -79,6 +88,9 @@ export default {
       this.axios
         .post("/games", this.game, { headers: { "x-token": this.token } })
         .then((res) => {
+          return this.uploadImage(res.data.game._id);
+        })
+        .then((res) => {
           this.$swal("Game registered successfully!");
           this.$router.push("/");
         })
@@ -91,6 +103,16 @@ export default {
             console.log(err.response.data);
           }
         });
+    },
+    uploadImage(_id) {
+      const formData = new FormData();
+      formData.append("file", this.file);
+      return this.axios.put(`/uploads/games/${_id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "x-token": this.token,
+        },
+      });
     },
   },
   computed: {

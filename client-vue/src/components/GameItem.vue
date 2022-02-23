@@ -1,13 +1,16 @@
 <template>
   <div class="game-item">
     <figure class="game-image">
-      <img src="@/assets/images/jumping-planet.jpg" alt="Jumping Planet" />
+      <img
+        :src="`${axios.defaults.baseURL}/uploads/games/${_id}`"
+        :alt="title"
+      />
       <figcaption>{{ likes }} <i class="fas fa-thumbs-up"> </i></figcaption>
     </figure>
     <div class="game-description">
       <h3>{{ title }}</h3>
       <p>{{ String(description).substring(0, 120) + "..." }}</p>
-      <div>
+      <div class="game-btn">
         <a href="" class="btn btn-primary">Ver</a>
       </div>
     </div>

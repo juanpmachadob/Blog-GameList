@@ -100,17 +100,16 @@ p {
   padding: 0.5rem 1.5rem;
   font-size: 1.05rem;
   text-transform: uppercase;
-  margin-top: .5rem;
   border-radius: 100px;
   -webkit-border-radius: 100px;
   -moz-border-radius: 100px;
   -ms-border-radius: 100px;
   -o-border-radius: 100px;
-  transition: all 0.3s;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  -ms-transition: all 0.3s;
-  -o-transition: all 0.3s;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
+  -webkit-transition: background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
+  -moz-transition: background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
+  -ms-transition: background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
+  -o-transition: background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
 }
 
 .btn:hover {
@@ -244,6 +243,10 @@ main, section {
   margin-bottom: 2rem;
 }
 
+.description a {
+  margin-top: 1.5rem;
+}
+
 .popular-games {
   justify-content: space-between;
   overflow-x: hidden;
@@ -275,6 +278,7 @@ main, section {
 
 .game-image img {
   max-width: 100%;
+  max-height: 250px;
   border-radius: 2rem 2rem 0 0;
   -webkit-border-radius: 2rem 2rem 0 0;
   -moz-border-radius: 2rem 2rem 0 0;
@@ -319,6 +323,10 @@ main, section {
   justify-content: flex-end;
 }
 
+.game-btn {
+  margin-top: .5rem;
+}
+
 .pagination {
   display: flex;
   justify-content: flex-end;
@@ -329,11 +337,11 @@ main, section {
   padding: .75rem 1.25rem;
   margin-left: 1rem;
   border: 2px solid var(--color-light);
-  transition: all .3s;
-  -webkit-transition: all .3s;
-  -moz-transition: all .3s;
-  -ms-transition: all .3s;
-  -o-transition: all .3s;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
+  -webkit-transition: background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
+  -moz-transition: background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
+  -ms-transition: background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
+  -o-transition: background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
   border-radius: 1.25rem;
   -webkit-border-radius: 1.25rem;
   -moz-border-radius: 1.25rem;
@@ -442,7 +450,6 @@ main, section {
 .paginator a {
   width: 30px;
   display: inline-block;
-  margin: 0;
   padding: 0.75rem 0;
   text-align: center;
   border: 2px solid var(--color-light);
@@ -538,10 +545,6 @@ form label {
   text-align: left;
 }
 
-form .btn {
-  margin: 0;
-}
-
 form input:not(.btn),
 form textarea,
 form select {
@@ -578,6 +581,10 @@ form input[type="file"] {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M447.1 32h-384C28.64 32-.01 60.65-.01 96v320c0 35.35 28.65 64 63.1 64h384c35.35 0 64-28.65 64-64V96c.01-35.35-27.79-64-63.99-64zm-336 64c26.51 0 48 21.49 48 48s-20.6 48-48 48-48-21.49-48-48 22.38-48 48-48zm335 311.6c-2.8 5.2-8.2 8.4-14.1 8.4H82.01a15.993 15.993 0 0 1-14.26-8.75 16 16 0 0 1 1.334-16.68l70-96C142.1 290.4 146.9 288 152 288s9.916 2.441 12.93 6.574l32.46 44.51 93.3-139.1C293.7 194.7 298.7 192 304 192s10.35 2.672 13.31 7.125l128 192c3.29 4.875 3.59 11.175.79 16.475z'/%3E%3C/svg%3E");
 }
 
+.form-50.buttons a {
+  margin-bottom: 1rem;
+}
+
 span.or {
   color: var(--color-text);
   display: block;
@@ -600,6 +607,14 @@ span.or {
 @media(min-width: 420px) {
   .paginator a {
     width: 45px;
+  }
+
+  .form-50.buttons {
+    flex-direction: row;
+  }
+
+  .form-50.buttons a {
+    margin-bottom: 0;
   }
 }
 
@@ -682,9 +697,12 @@ span.or {
     justify-content: right;
   }
 
-  .nav-separator {
-    border-right: 1px solid var(--color-dark);
+  .nav-separator-left {
     border-left: 1px solid var(--color-dark);
+  }
+  
+  .nav-separator-right{
+    border-right: 1px solid var(--color-dark);
   }
 
   .nav-item {

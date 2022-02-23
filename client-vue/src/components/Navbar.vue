@@ -24,17 +24,17 @@
         class="navigation"
         v-bind:class="{ 'mobile-menu-active': !menuOpen }"
       >
-        <router-link :to="{ name: 'home' }" class="nav-item nav-separator"
+        <router-link v-if="$route.name !== 'home'" :to="{ name: 'home' }" class="nav-item nav-separator-left"
           >Games</router-link
         >
-        <router-link v-if="!token" :to="{ name: 'login' }" class="nav-item"
+        <router-link v-if="token" @click="logout()" to="/" class="nav-item red nav-separator-left"
+          >Logout</router-link
+        >
+        <router-link v-if="!token" :to="{ name: 'login' }" class="nav-item nav-separator-left"
           >Sign In</router-link
         >
         <router-link v-if="!token" :to="{ name: 'register' }" class="nav-item"
           >Sign Up</router-link
-        >
-        <router-link v-if="token" @click="logout()" to="/" class="nav-item red"
-          >Logout</router-link
         >
       </nav>
     </div>

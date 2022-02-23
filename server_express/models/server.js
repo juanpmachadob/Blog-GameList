@@ -13,7 +13,8 @@ class Server {
       auth: "/api/auth",
       users: "/api/users",
       categories: "/api/categories",
-      games: "/api/games"
+      games: "/api/games",
+      uploads: "/api/uploads",
     };
 
     this.connectDB();
@@ -31,6 +32,18 @@ class Server {
 
     // Parse and read from body
     this.app.use(express.json());
+
+    // Public directory
+    this.app.use(express.static("public"));
+
+    // File upload
+    this.app.use(
+      fileUpload({
+        useTempFiles: true,
+        tempFileDir: "/tmp/",
+        createParentPath: true,
+      })
+    );
   }
 
   routes() {
@@ -38,6 +51,7 @@ class Server {
     this.app.use(this.paths.users, require("../routes/users"));
     this.app.use(this.paths.categories, require("../routes/categories"));
     this.app.use(this.paths.games, require("../routes/games"));
+    this.app.use(this.paths.uploads, require("../routes/uploads"));
   }
 
   listen() {
