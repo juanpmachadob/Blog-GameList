@@ -38,6 +38,11 @@
               name="file"
               id="file"
             />
+            <div v-if="filePreview && file" class="image-preview">
+              <figure>
+                <img :src="filePreview" :alt="file.name" />
+              </figure>
+            </div>
           </div>
           <div class="form-50 buttons">
             <router-link :to="{ name: 'home' }" class="btn btn-secondary"
@@ -59,6 +64,7 @@ export default {
       description: "",
       category: "",
     },
+    filePreview: null,
     file: null,
     categories: [],
   }),
@@ -67,8 +73,16 @@ export default {
   },
   methods: {
     handleFileUpload(event) {
-      this.file = event.target.files[0];
-      console.log(this.file);
+      const file = event.target.files[0];
+      this.file = file;
+      console.log(file);
+
+      // File preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.filePreview = e.target.result;
+      };
+      reader.readAsDataURL(file);
     },
     getCategories() {
       this.axios

@@ -67,7 +67,6 @@ const showImage = async (req, res) => {
       });
   }
   if (model.img) {
-    // return res.sendFile(model.img);
     return res.redirect(model.img);
   }
 
