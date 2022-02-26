@@ -8,8 +8,6 @@ const Game = require("../models/game");
 
 const updateImageCloudinary = async (req, res) => {
   const { id, collection } = req.params;
-  console.log(req.files);
-  console.log(req.file);
   let model;
 
   switch (collection) {

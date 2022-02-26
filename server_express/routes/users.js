@@ -38,7 +38,7 @@ router.post(
     ).isStrongPassword(),
     check("email", "Invalid email.").isEmail(),
     check("email").custom(emailExists),
-    check("role", `Role must be: admin | editor | user`).isIn([
+    check("role", `Role must be: admin | user`).isIn([
       "admin",
       "user",
     ]),

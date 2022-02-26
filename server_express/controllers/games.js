@@ -22,6 +22,19 @@ const gamesGetPopular = async (req, res) => {
   res.json({ games });
 };
 
+const gamesGetOwned = async (req, res) => {
+  const { page = 1, limit = 10 } = req.query;
+  const skipIndex = (Number(page) - 1) * limit;
+  const query = { status: true, user: req.user.id };
+
+  const [total, games] = await Promise.all([
+    Game.countDocuments(query),
+    Game.find(query).sort({ likes: -1 }).limit(Number(limit)).skip(skipIndex),
+  ]);
+
+  res.json({ total, games });
+};
+
 const gamesGetById = async (req, res) => {
   const { id } = req.params;
   const game = await Game.findById(id)
@@ -75,6 +88,7 @@ const gamesDelete = async (req, res) => {
 module.exports = {
   gamesGet,
   gamesGetPopular,
+  gamesGetOwned,
   gamesGetById,
   gamesPost,
   gamesPut,

@@ -3,13 +3,14 @@ const { check } = require("express-validator");
 const { showImage, updateImageCloudinary } = require("../controllers/uploads");
 
 const { allowedCollections } = require("../helpers");
-const { validateFile, fieldValidation } = require("../middlewares");
+const { validateJWT, validateFile, fieldValidation } = require("../middlewares");
 
 const router = Router();
 
 router.put(
   "/:collection/:id",
   [
+    validateJWT,
     validateFile,
     check("id", "Invalid ID").isMongoId(),
     check("collection").custom((c) => allowedCollections(c, ["games"])),

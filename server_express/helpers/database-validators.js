@@ -3,9 +3,16 @@ const Category = require("../models/category");
 const Game = require("../models/game");
 
 const emailExists = async (email = "") => {
-  const exists = await User.findOne({ email });
+  const exists = await User.findOne({ email: email.toLowerCase() });
   if (exists) {
     throw new Error(`Email already exists.`);
+  }
+};
+
+const titleExists = async (title = "") => {
+  const exists = await Game.findOne({ title: title.toLowerCase() });
+  if (exists) {
+    throw new Error(`Game title already exists.`);
   }
 };
 
@@ -31,9 +38,12 @@ const gameExistsById = async (id = "") => {
   if (!game) {
     throw new Error(`Game ${id} doesn't exists.`);
   }
+  if (!game.status){
+    throw new Error(`Game ${id} is deleted.`);
+  }
 };
 
-const isPropietary = async (req, res, next) => {
+const isOwner = async (req, res, next) => {
   if (!req.user) {
     return res.status(500).json({
       msg: "Can't validate role if token is not validated.",
@@ -48,7 +58,7 @@ const isPropietary = async (req, res, next) => {
   next();
 };
 
-const isAdminOrPropietary = async (req, res, next) => {
+const isAdminOrOwner = async (req, res, next) => {
   if (!req.user) {
     return res.status(500).json({
       msg: "Can't validate role if token is not validated.",
@@ -78,10 +88,11 @@ const allowedCollections = (collection = "", collections = []) => {
 
 module.exports = {
   emailExists,
+  titleExists,
   userExistsById,
   categoryExistsById,
   gameExistsById,
-  isPropietary,
-  isAdminOrPropietary,
+  isOwner,
+  isAdminOrOwner,
   allowedCollections,
 };

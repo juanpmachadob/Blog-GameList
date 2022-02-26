@@ -4,17 +4,19 @@ const { check } = require("express-validator");
 const {
   gamesGet,
   gamesGetPopular,
+  gamesGetOwned,
   gamesGetById,
   gamesPost,
   gamesPut,
   gamesDelete,
 } = require("../controllers/games");
 
-const { validateJWT, fieldValidation, hasRole } = require("../middlewares");
+const { validateJWT, fieldValidation } = require("../middlewares");
 const {
   categoryExistsById,
+  titleExists,
   gameExistsById,
-  isAdminOrPropietary,
+  isAdminOrOwner,
 } = require("../helpers/database-validators");
 
 const router = Router();
@@ -22,6 +24,8 @@ const router = Router();
 router.get("/", gamesGet);
 
 router.get("/popular", gamesGetPopular);
+
+router.get("/owned", [validateJWT], gamesGetOwned);
 
 router.get(
   "/:id",
@@ -38,6 +42,7 @@ router.post(
   [
     validateJWT,
     check("title", "Title is required").not().isEmpty(),
+    check("title").custom(titleExists),
     check("description", "Description is required").not().isEmpty(),
     check("category", "Invalid category ID").isMongoId(),
     fieldValidation,
@@ -50,9 +55,8 @@ router.post(
 router.put(
   "/:id",
   [
-    // check("title").exists().if()
     validateJWT,
-    isAdminOrPropietary,
+    isAdminOrOwner,
     check("id", "Invalid game ID.").isMongoId(),
     fieldValidation,
     check("id").custom(gameExistsById),
@@ -65,7 +69,7 @@ router.delete(
   "/:id",
   [
     validateJWT,
-    isAdminOrPropietary,
+    isAdminOrOwner,
     check("id", "Invalid game ID.").isMongoId(),
     fieldValidation,
     check("id").custom(gameExistsById),
