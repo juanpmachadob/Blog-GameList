@@ -18,10 +18,32 @@ const routes = [
     component: () => import("../views/Auth/Register.vue"),
   },
   {
+    path: "/games",
+    name: "games",
+    component: () => import("../views/Games/Index.vue"),
+  },
+  {
+    path: "/games/owned",
+    name: "games.owned",
+    component: () => import("../views/Games/Owned.vue"),
+    meta: { requiresAuth: true },
+  },
+  {
     path: "/games/add",
     name: "games.add",
     component: () => import("../views/Games/Add.vue"),
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/games/:id/edit",
+    name: "games.edit",
+    component: () => import("../views/Games/Edit.vue"),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/games/:id",
+    name: "games.show",
+    component: () => import("../views/Games/Show.vue"),
   },
 ];
 

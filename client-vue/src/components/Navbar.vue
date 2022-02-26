@@ -24,8 +24,11 @@
         class="navigation"
         v-bind:class="{ 'mobile-menu-active': !menuOpen }"
       >
-        <router-link v-if="$route.name !== 'home'" :to="{ name: 'home' }" class="nav-item nav-separator-left"
-          >Games</router-link
+        <router-link :to="{ name: 'games' }" class="nav-item nav-separator-left"
+          >All games</router-link
+        >
+        <router-link :to="{ name: 'games.owned' }" class="nav-item"
+          >My games</router-link
         >
         <router-link v-if="token" @click="logout()" to="/" class="nav-item red nav-separator-left"
           >Logout</router-link

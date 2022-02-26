@@ -277,6 +277,7 @@ main, section {
 }
 
 .game-image img {
+  width: 100%;
   max-width: 100%;
   max-height: 250px;
   border-radius: 2rem 2rem 0 0;
@@ -507,6 +508,54 @@ main, section {
   color: var(--color-light);
 }
 
+/* Game Page */
+
+.game-page .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.game-main.card {
+  padding: 0;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.game-main article {
+  padding: 2rem;
+}
+
+.game-page .game-image figcaption {
+  margin: 1.25rem 1.25rem 0 0;
+  font-size: 1.5rem;
+}
+
+.game-image figcaption i {
+  font-size: 1rem;
+  top: -2px;
+}
+
+.game-aside .card {
+  margin-bottom: 2rem;
+}
+
+.game-aside h2 {
+  margin: 0;
+}
+
+.game-aside p, .game-aside b {
+  font-size: 1.25rem;
+}
+
+.game-aside .game-info {
+  margin: 1rem 0;
+}
+
+.game-info div:first-child {
+  margin-bottom: 0.5rem;
+}
+
 /* Forms */
 
 .card {
@@ -581,7 +630,7 @@ form input[type="file"] {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M447.1 32h-384C28.64 32-.01 60.65-.01 96v320c0 35.35 28.65 64 63.1 64h384c35.35 0 64-28.65 64-64V96c.01-35.35-27.79-64-63.99-64zm-336 64c26.51 0 48 21.49 48 48s-20.6 48-48 48-48-21.49-48-48 22.38-48 48-48zm335 311.6c-2.8 5.2-8.2 8.4-14.1 8.4H82.01a15.993 15.993 0 0 1-14.26-8.75 16 16 0 0 1 1.334-16.68l70-96C142.1 290.4 146.9 288 152 288s9.916 2.441 12.93 6.574l32.46 44.51 93.3-139.1C293.7 194.7 298.7 192 304 192s10.35 2.672 13.31 7.125l128 192c3.29 4.875 3.59 11.175.79 16.475z'/%3E%3C/svg%3E");
 }
 
-.form-50.buttons a {
+.form-50.buttons a:first-child {
   margin-bottom: 1rem;
 }
 
@@ -591,7 +640,7 @@ span.or {
   margin: .75rem;
 }
 
-form .image-preview img{
+form .image-preview img {
   max-height: 200px;
   box-shadow: 0 0 20px rgb(36 37 38 / 10%);
   border-radius: 2rem;
@@ -606,7 +655,7 @@ form .image-preview img{
   -o-transition: transform 0.3s;
 }
 
-form .image-preview img:hover{
+form .image-preview img:hover {
   transform: scale(1.05);
   -webkit-transform: scale(1.05);
   -moz-transform: scale(1.05);
@@ -636,7 +685,7 @@ form .image-preview img:hover{
     flex-direction: row;
   }
 
-  .form-50.buttons a {
+  .form-50.buttons a:first-child {
     margin-bottom: 0;
   }
 }
@@ -723,8 +772,8 @@ form .image-preview img:hover{
   .nav-separator-left {
     border-left: 1px solid var(--color-dark);
   }
-  
-  .nav-separator-right{
+
+  .nav-separator-right {
     border-right: 1px solid var(--color-dark);
   }
 
@@ -739,6 +788,26 @@ form .image-preview img:hover{
   .container .game-list .game-item {
     flex-basis: calc(50% - 1rem);
     margin-bottom: 2rem;
+  }
+
+  .game-page .container {
+    flex-direction: row;
+  }
+
+  .game-main {
+    flex-basis: calc(66.6% - 1rem);
+  }
+
+  .game-aside {
+    flex-basis: calc(33% - 1rem);
+  }
+
+  .form-50.buttons a:first-child {
+    margin-bottom: 1rem;
+  }
+
+  .form-50.buttons {
+    flex-direction: column;
   }
 }
 
@@ -758,5 +827,19 @@ form .image-preview img:hover{
   .container .game-list .game-item {
     flex-basis: calc(33% - 1rem);
     margin-bottom: 2rem;
+  }
+
+  .game-page .form-50.buttons a {
+    flex-basis: calc(50% - 1rem);
+  }
+}
+
+@media(min-width: 1010px) {
+  .form-50.buttons {
+    flex-direction: row;
+  }
+
+  .form-50.buttons a:first-child {
+    margin-bottom: 0;
   }
 }

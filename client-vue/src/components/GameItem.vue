@@ -1,6 +1,6 @@
 <template>
   <div class="game-item">
-    <figure class="game-image">
+    <figure class="game-image" style="max-height: 250px">
       <img
         :src="`${axios.defaults.baseURL}/uploads/games/${_id}`"
         :alt="title"
@@ -8,10 +8,14 @@
       <figcaption>{{ likes }} <i class="fas fa-thumbs-up"> </i></figcaption>
     </figure>
     <div class="game-description">
-      <h3>{{ title }}</h3>
+      <h3>{{ title.charAt(0).toUpperCase() + title.slice(1) }}</h3>
       <p>{{ String(description).substring(0, 120) + "..." }}</p>
       <div class="game-btn">
-        <a href="" class="btn btn-primary">Ver</a>
+        <router-link
+          :to="{ name: 'games.show', params: { id: _id } }"
+          class="btn btn-primary"
+          >View</router-link
+        >
       </div>
     </div>
   </div>

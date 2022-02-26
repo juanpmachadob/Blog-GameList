@@ -2,8 +2,8 @@
   <section class="login">
     <div class="container">
       <div class="card">
-        <form @submit.prevent="addGame()">
-          <h2>Add new game</h2>
+        <form @submit.prevent="editGame()">
+          <h2>Edit game</h2>
           <div class="form-item">
             <label for="title">Title</label>
             <input type="text" v-model="game.title" name="title" id="title" />
@@ -38,9 +38,12 @@
               name="file"
               id="file"
             />
-            <div v-if="filePreview && file" class="image-preview">
-              <figure>
+            <div class="image-preview">
+              <figure v-if="filePreview && file">
                 <img :src="filePreview" :alt="file.name" />
+              </figure>
+              <figure v-else>
+                <img :src="game.img" :alt="game.title" />
               </figure>
             </div>
           </div>
@@ -48,7 +51,7 @@
             <router-link :to="{ name: 'home' }" class="btn btn-secondary"
               >Back</router-link
             >
-            <input type="submit" value="Add game" class="btn btn-primary" />
+            <input type="submit" value="Edit game" class="btn btn-primary" />
           </div>
         </form>
       </div>
@@ -69,9 +72,16 @@ export default {
     categories: [],
   }),
   mounted() {
+    this.getGame();
     this.getCategories();
   },
   methods: {
+    getGame() {
+      this.axios.get(`/games/${this.$route.params.id}`).then((res) => {
+        this.game = res.data.game;
+        this.game.category = res.data.game.category._id;
+      });
+    },
     handleFileUpload(event) {
       const file = event.target.files[0];
       this.file = file;
@@ -98,18 +108,25 @@ export default {
           }
         });
     },
-    addGame() {
+    editGame() {
       this.axios
-        .post("/games", this.game, { headers: { "x-token": this.token } })
+        .put(`/games/${this.$route.params.id}`, this.game, {
+          headers: { "x-token": this.token },
+        })
         .then((res) => {
-          return this.uploadImage(res.data.game._id);
+          if (this.file) {
+            return this.uploadImage(res.data.newGame._id);
+          }
         })
         .then((res) => {
           this.$swal({
             icon: "success",
-            title: "Game registered successfully!",
+            title: "Game modified successfully!",
           });
-          this.$router.push("/");
+          this.$router.push({
+            name: "games.index",
+            params: { id: this.$route.params.id },
+          });
         })
         .catch((err) => {
           const errors = err.response.data.errors;
@@ -117,7 +134,7 @@ export default {
             console.log(errors);
             this.errors = errors;
           } else {
-            console.log(err.response.data);
+            console.log(err.response);
           }
         });
     },

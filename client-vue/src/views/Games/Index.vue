@@ -1,34 +1,36 @@
 <template>
-  <section id="all-games" class="container">
-    <div class="description">
-      <h2>All games</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, nemo!
-      </p>
-      <router-link
-        v-if="token"
-        :to="{ name: 'games.add' }"
-        class="btn btn-primary"
-        >Add new game</router-link
-      >
-    </div>
-    <div class="game-list">
-      <GameItem
-        v-for="(game, key) in games"
-        :key="key"
-        :_id="game._id"
-        :title="game.title"
-        :description="game.description"
-        :likes="game.likes"
+  <main>
+    <div id="all-games" class="container">
+      <div class="description">
+        <h2>All games</h2>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, nemo!
+        </p>
+        <router-link
+          v-if="token"
+          :to="{ name: 'games.add' }"
+          class="btn btn-primary"
+          >Add new game</router-link
+        >
+      </div>
+      <div class="game-list">
+        <GameItem
+          v-for="(game, key) in games"
+          :key="key"
+          :_id="game._id"
+          :title="game.title"
+          :description="game.description"
+          :likes="game.likes"
+        />
+      </div>
+      <Paginator
+        :key="total"
+        :total="total"
+        :limit="limit"
+        @updatePage="getGames()"
       />
     </div>
-    <Paginator
-      :key="total"
-      :total="total"
-      :limit="limit"
-      @updatePage="getGames()"
-    />
-  </section>
+  </main>
 </template>
 
 <script>
@@ -36,7 +38,6 @@ import { mapState } from "vuex";
 import GameItem from "@/components/GameItem.vue";
 import Paginator from "@/components/Paginator.vue";
 export default {
-  name: "GameContainer",
   components: {
     GameItem,
     Paginator,
@@ -50,9 +51,9 @@ export default {
     this.getGames();
   },
   methods: {
-    async getGames() {
+    getGames() {
       const page = parseInt(this.$route.query.page) || 1;
-      await this.axios
+      this.axios
         .get(`/games?page=${page}&limit=${this.limit}`)
         .then((res) => {
           this.total = res.data.total;

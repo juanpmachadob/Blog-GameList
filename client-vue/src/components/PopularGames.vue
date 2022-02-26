@@ -46,7 +46,7 @@ export default {
     },
     getPopularGames() {
       this.axios
-        .get("/games/popular" + "?limit=10")
+        .get("/games/popular?limit=10")
         .then((res) => {
           this.games = res.data.games;
         })

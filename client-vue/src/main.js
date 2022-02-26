@@ -10,7 +10,12 @@ import store from "./store";
 
 const app = createApp(App);
 
-app.use(router).use(store).use(VueAxios, axios).use(VueSweetalert2);
+const options = {
+  confirmButtonColor: '#6b00d7',
+  cancelButtonColor: '#404449',
+};
+
+app.use(router).use(store).use(VueAxios, axios).use(VueSweetalert2, options);
 
 app.config.globalProperties.axios = axios;
 axios.defaults.baseURL = "http://localhost:5000/api";
