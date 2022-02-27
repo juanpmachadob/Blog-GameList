@@ -40,7 +40,7 @@ const gamesGetById = async (req, res) => {
   const game = await Game.findById(id)
     .populate("category", "name")
     .populate("user", "name");
-  res.json({ game });
+  res.json({ game, canManage: true });
 };
 
 const gamesPost = async (req, res) => {

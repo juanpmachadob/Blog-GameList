@@ -2,10 +2,10 @@
   <main>
     <div id="all-games" class="container">
       <div class="description">
-        <h2>Games added by you</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, nemo!
-        </p>
+        <h2>{{ total }} results for "{{ this.$route.params.term }}"</h2>
+        <router-link :to="{ name: 'games' }" class="btn btn-primary"
+          >All games</router-link
+        >
         <router-link
           v-if="token"
           :to="{ name: 'games.add' }"
@@ -27,7 +27,7 @@
         :key="total"
         :total="total"
         :limit="limit"
-        @updatePage="getOwnedGames()"
+        @updatePage="searchGames()"
       />
     </div>
   </main>
@@ -47,19 +47,24 @@ export default {
     limit: 10,
     games: [],
   }),
-  mounted() {
-    this.getOwnedGames();
+  watch: {
+    "$route.params.term": {
+      immediate: true,
+      handler() {
+        this.searchGames();
+      },
+    },
   },
   methods: {
-    getOwnedGames() {
+    searchGames() {
       const page = parseInt(this.$route.query.page) || 1;
       this.axios
-        .get(`/games/owned?page=${page}&limit=${this.limit}`, {
-          headers: { "x-token": this.token },
-        })
+        .get(
+          `/search/games/${this.$route.params.term}?page=${page}&limit=${this.limit}`
+        )
         .then((res) => {
           this.total = res.data.total;
-          this.games = res.data.games;
+          this.games = res.data.results;
         })
         .catch((err) => {
           this.$swal({

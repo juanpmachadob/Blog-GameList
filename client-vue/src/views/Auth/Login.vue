@@ -7,6 +7,9 @@
           <div class="form-item">
             <label for="email">Email</label>
             <input type="email" v-model="user.email" name="email" id="email" />
+            <span class="errors" v-if="errors.has('email')">{{
+              errors.get("email")
+            }}</span>
           </div>
           <div class="form-item">
             <label for="password">Password</label>
@@ -16,6 +19,9 @@
               name="password"
               id="password"
             />
+            <span class="errors" v-if="errors.has('password')">{{
+              errors.get("password")
+            }}</span>
           </div>
           <input type="submit" value="Sign In" class="btn btn-primary" />
           <span class="or">OR</span>
@@ -35,9 +41,11 @@
 
 <script>
 import { mapActions } from "vuex";
+import Errors from "@/utilities/Errors";
 export default {
   name: "Login",
   data: () => ({
+    errors: new Errors(),
     user: {
       email: "",
       password: "",
@@ -46,6 +54,7 @@ export default {
   methods: {
     ...mapActions(["saveToken"]),
     login() {
+      this.errors.clearAll();
       this.axios
         .post("/auth/login", this.user)
         .then((res) => {
@@ -53,11 +62,23 @@ export default {
           this.$router.push("/");
         })
         .catch((err) => {
-          if (err.response.status === 400) {
-            console.log(err.response.data.errors);
+          const errorData = err.response.data;
+          let msg = "";
+
+          if (errorData.errors) {
+            this.errors.record(errorData.errors);
+            msg = "The fields are not valid";
+          } else if (errorData.msg) {
+            msg = errorData.msg;
           } else {
-            console.log(err.response.data.msg);
+            msg = err;
           }
+
+          this.$swal({
+            icon: "error",
+            title: "An error has ocurred.",
+            text: msg,
+          });
         });
     },
   },

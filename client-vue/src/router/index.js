@@ -35,6 +35,11 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/games/search/:term",
+    name: "games.search",
+    component: () => import("../views/Games/Search.vue"),
+  },
+  {
     path: "/games/:id/edit",
     name: "games.edit",
     component: () => import("../views/Games/Edit.vue"),
@@ -44,6 +49,15 @@ const routes = [
     path: "/games/:id",
     name: "games.show",
     component: () => import("../views/Games/Show.vue"),
+  },
+  {
+    path: "/404",
+    name: "404",
+    component: () => import("../views/404.vue"),
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    redirect: "404",
   },
 ];
 

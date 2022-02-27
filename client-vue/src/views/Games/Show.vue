@@ -14,7 +14,7 @@
 
         <article class="game-info">
           <h1>
-            {{ game.title.charAt(0).toUpperCase() + game.title.slice(1) }}
+            {{ game.title }}
           </h1>
           <p>{{ game.description }}</p>
         </article>
@@ -32,7 +32,7 @@
               <p>{{ game.user.name }}</p>
             </div>
           </div>
-          <div class="form-50 buttons">
+          <div class="form-50 buttons" v-if="token && canManage">
             <router-link
               :to="{
                 name: 'games.edit',
@@ -60,15 +60,24 @@ export default {
       category: {},
       user: {},
     },
+    canManage: false,
   }),
   mounted() {
     this.getGame();
   },
   methods: {
     getGame() {
-      this.axios.get(`/games/${this.$route.params.id}`).then((res) => {
-        this.game = res.data.game;
-      });
+      this.axios
+        .get(`/games/${this.$route.params.id}`)
+        .then((res) => {
+          this.game = res.data.game;
+          this.canManage = res.data.canManage;
+        })
+        .catch((err) => {
+          this.$router.push({
+            name: "404",
+          });
+        });
     },
     deleteGameAlert() {
       this.$swal({
@@ -83,8 +92,11 @@ export default {
           }
         })
         .catch((err) => {
-          this.$swal({ icon: "error", title: "An error occurred." });
-          console.log(err.response.data);
+          this.$swal({
+            icon: "error",
+            title: "An error has ocurred.",
+            text: err.response.data.msg ? err.response.data.msg : err,
+          });
         });
     },
     deleteGame() {

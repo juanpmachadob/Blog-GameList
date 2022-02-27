@@ -60,11 +60,11 @@ export default {
           this.games = res.data.games;
         })
         .catch((err) => {
-          if (err.response.status === 400) {
-            console.log(err.response.data.errors);
-          } else {
-            console.log(err.response.data.msg);
-          }
+          this.$swal({
+            icon: "error",
+            title: "An error has ocurred.",
+            text: err,
+          });
         });
     },
   },

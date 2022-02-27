@@ -1,5 +1,5 @@
 <template>
-  <section class="login">
+  <section>
     <div class="container">
       <div class="card">
         <form @submit.prevent="addGame()">
@@ -7,6 +7,9 @@
           <div class="form-item">
             <label for="title">Title</label>
             <input type="text" v-model="game.title" name="title" id="title" />
+            <span class="errors" v-if="errors.has('title')">{{
+              errors.get("title")
+            }}</span>
           </div>
           <div class="form-item">
             <label for="description">Description</label>
@@ -16,6 +19,9 @@
               name="description"
               id="description"
             />
+            <span class="errors" v-if="errors.has('description')">{{
+              errors.get("description")
+            }}</span>
           </div>
           <div class="form-item">
             <label for="Category">Category</label>
@@ -29,6 +35,9 @@
                 {{ category.name }}
               </option>
             </select>
+            <span class="errors" v-if="errors.has('category')">{{
+              errors.get("category")
+            }}</span>
           </div>
           <div class="form-item">
             <label for="file">Image file</label>
@@ -45,7 +54,7 @@
             </div>
           </div>
           <div class="form-50 buttons">
-            <router-link :to="{ name: 'home' }" class="btn btn-secondary"
+            <router-link :to="{ name: 'games' }" class="btn btn-secondary"
               >Back</router-link
             >
             <input type="submit" value="Add game" class="btn btn-primary" />
@@ -57,8 +66,10 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import Errors from "@/utilities/Errors";
 export default {
   data: () => ({
+    errors: new Errors(),
     game: {
       title: "",
       description: "",
@@ -99,6 +110,7 @@ export default {
         });
     },
     addGame() {
+      this.errors.clearAll();
       this.axios
         .post("/games", this.game, { headers: { "x-token": this.token } })
         .then((res) => {
@@ -112,13 +124,23 @@ export default {
           this.$router.push("/");
         })
         .catch((err) => {
-          const errors = err.response.data.errors;
-          if (errors) {
-            console.log(errors);
-            this.errors = errors;
+          const errorData = err.response.data;
+          let msg = "";
+
+          if (errorData.errors) {
+            this.errors.record(errorData.errors);
+            msg = "The fields are not valid";
+          } else if (errorData.msg) {
+            msg = errorData.msg;
           } else {
-            console.log(err.response.data);
+            msg = err;
           }
+
+          this.$swal({
+            icon: "error",
+            title: `An error has ocurred.`,
+            text: msg,
+          });
         });
     },
     uploadImage(_id) {

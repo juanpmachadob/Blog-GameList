@@ -8,7 +8,7 @@
       <figcaption>{{ likes }} <i class="fas fa-thumbs-up"> </i></figcaption>
     </figure>
     <div class="game-description">
-      <h3>{{ title.charAt(0).toUpperCase() + title.slice(1) }}</h3>
+      <h3>{{ title }}</h3>
       <p>{{ String(description).substring(0, 120) + "..." }}</p>
       <div class="game-btn">
         <router-link

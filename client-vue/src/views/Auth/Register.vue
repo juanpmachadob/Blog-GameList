@@ -7,10 +7,16 @@
           <div class="form-item">
             <label for="name">Name</label>
             <input type="text" v-model="user.name" name="name" id="name" />
+            <span class="errors" v-if="errors.has('name')">{{
+              errors.get("name")
+            }}</span>
           </div>
           <div class="form-item">
             <label for="email">Email</label>
             <input type="email" v-model="user.email" name="email" id="email" />
+            <span class="errors" v-if="errors.has('email')">{{
+              errors.get("email")
+            }}</span>
           </div>
           <div class="form-50">
             <div class="form-item">
@@ -21,6 +27,9 @@
                 name="password"
                 id="password"
               />
+              <span class="errors" v-if="errors.has('password')">{{
+                errors.get("password")
+              }}</span>
             </div>
             <div class="form-item">
               <label for="passwordConfirmation">Confirm password</label>
@@ -30,6 +39,9 @@
                 name="passwordConfirmation"
                 id="passwordConfirmation"
               />
+              <span class="errors" v-if="errors.has('passwordConfirmation')">{{
+                errors.get("passwordConfirmation")
+              }}</span>
             </div>
           </div>
           <input type="submit" value="Sign Up" class="btn btn-primary" />
@@ -53,20 +65,22 @@
 
 <script>
 import { mapActions } from "vuex";
+import Errors from "@/utilities/Errors";
 export default {
   name: "Register",
   data: () => ({
+    errors: new Errors(),
     user: {
       name: "",
       email: "",
       password: "",
       passwordConfirmation: "",
     },
-    errors: {},
   }),
   methods: {
     ...mapActions(["saveToken"]),
     register() {
+      this.errors.clearAll();
       this.axios
         .post("/auth/register", this.user)
         .then((res) => {
@@ -74,13 +88,23 @@ export default {
           this.$router.push("/");
         })
         .catch((err) => {
-          const errors = err.response.data.errors;
-          if (errors) {
-            console.log(errors);
-            this.errors = errors;
+          const errorData = err.response.data;
+          let msg = "";
+
+          if (errorData.errors) {
+            this.errors.record(errorData.errors);
+            msg = "The fields are not valid";
+          } else if (errorData.msg) {
+            msg = errorData.msg;
           } else {
-            console.log(err.response.data);
+            msg = err;
           }
+
+          this.$swal({
+            icon: "error",
+            title: "An error has ocurred.",
+            text: msg
+          });
         });
     },
   },
