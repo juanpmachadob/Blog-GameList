@@ -136,6 +136,13 @@ export default {
     },
     editGame() {
       this.errors.clearAll();
+      this.$swal({
+        title: "Editting",
+        text: "Please, wait...",
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+      });
+      this.$swal.showLoading();
       this.axios
         .put(`/games/${this.$route.params.id}`, this.game, {
           headers: { "x-token": this.token },

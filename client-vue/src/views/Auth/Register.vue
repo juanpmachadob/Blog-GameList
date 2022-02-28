@@ -46,7 +46,21 @@
           </div>
           <input type="submit" value="Sign Up" class="btn btn-primary" />
           <span class="or">OR</span>
-          <a href="" class="btn btn-primary">Google</a>
+          <div
+            id="g_id_onload"
+            data-client_id="549728898652-5dp8roml8cnkp61saupl0a6aht6ls02r.apps.googleusercontent.com"
+            data-auto_prompt="false"
+            data-callback="handleCredentialResponse"
+          ></div>
+          <div
+            class="g_id_signin"
+            data-type="standard"
+            data-size="large"
+            data-theme="outline"
+            data-text="sign_in_with"
+            data-shape="rectangular"
+            data-logo_alignment="left"
+          ></div>
         </form>
         <div class="card-color">
           <h2>Welcome again!</h2>
@@ -62,10 +76,10 @@
   </section>
 </template>
 
-
 <script>
 import { mapActions } from "vuex";
 import Errors from "@/utilities/Errors";
+import Storage from "@/utilities/Storage";
 export default {
   name: "Register",
   data: () => ({
@@ -77,15 +91,62 @@ export default {
       passwordConfirmation: "",
     },
   }),
+  beforeMount() {
+    window.handleCredentialResponse = (res) => {
+      this.handleCredentialResponse(res);
+    };
+  },
+  mounted() {
+    const googleScript = document.createElement("script");
+    googleScript.setAttribute("src", "https://accounts.google.com/gsi/client");
+    document.head.appendChild(googleScript);
+  },
+  beforeDestroy() {
+    delete window.handleCredentialResponse;
+  },
   methods: {
     ...mapActions(["saveToken"]),
+    handleCredentialResponse(response) {
+      this.$swal({
+        title: "Registering",
+        text: "Please, wait...",
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+      });
+      this.$swal.showLoading();
+      this.axios
+        .post("/auth/google", {
+          id_token: response.credential,
+        })
+        .then((res) => {
+          this.saveToken(res.data.token);
+          Storage.record("email", res.data.user.email);
+          this.$router.push("/");
+          this.$swal.closeModal();
+        })
+        .catch((err) => {
+          this.$swal({
+            icon: "error",
+            title: "An error has ocurred.",
+            text: err.response.data.msg ? err.response.data.msg : err,
+          });
+        });
+    },
     register() {
       this.errors.clearAll();
+      this.$swal({
+        title: "Registering",
+        text: "Please, wait...",
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+      });
+      this.$swal.showLoading();
       this.axios
         .post("/auth/register", this.user)
         .then((res) => {
           this.saveToken(res.data.token);
           this.$router.push("/");
+          this.$swal.closeModal();
         })
         .catch((err) => {
           const errorData = err.response.data;
@@ -103,7 +164,7 @@ export default {
           this.$swal({
             icon: "error",
             title: "An error has ocurred.",
-            text: msg
+            text: msg,
           });
         });
     },

@@ -32,7 +32,7 @@
         <router-link :to="{ name: 'games' }" class="nav-item nav-separator-left"
           >All games</router-link
         >
-        <router-link :to="{ name: 'games.owned' }" class="nav-item"
+        <router-link v-if="token" :to="{ name: 'games.owned' }" class="nav-item"
           >My games</router-link
         >
         <router-link
@@ -58,27 +58,39 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import Storage from "@/utilities/Storage";
 export default {
   name: "Navbar",
   data: () => ({
     menuOpen: false,
     searchTerm: "",
   }),
+  mounted() {
+    const googleScript = document.createElement("script");
+    googleScript.setAttribute("src", "https://accounts.google.com/gsi/client");
+    document.head.appendChild(googleScript);
+  },
   methods: {
     ...mapActions(["deleteToken"]),
     logout() {
       this.deleteToken();
+      if (google && Storage.has("email")) {
+        google.accounts.id.disableAutoSelect();
+        google.accounts.id.revoke(Storage.get("email"), (done) => {
+          Storage.remove("email");
+        });
+      }
     },
     showSearchInput() {
       if (window.innerWidth <= 768) {
         this.$swal({
-          title: "hola",
+          title: "Search game...",
           input: "text",
           showCancelButton: true,
           confirmButtonText: "Search",
           showLoaderOnConfirm: true,
         }).then((result) => {
-          if (result.isConfirmed){
+          if (result.isConfirmed) {
             this.searchTerm = result.value;
             this.search();
           }
@@ -93,6 +105,7 @@ export default {
           name: "games.search",
           params: { term: this.searchTerm },
         });
+        this.searchTerm = "";
       }
     },
   },

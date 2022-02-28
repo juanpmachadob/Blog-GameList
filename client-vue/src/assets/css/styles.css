@@ -264,6 +264,10 @@ main, section {
   flex-shrink: 0;
 }
 
+.no-games p{
+  margin-bottom: 1.5rem;
+}
+
 .game-item {
   background-color: white;
   border-radius: 2rem;
@@ -358,6 +362,11 @@ main, section {
   -moz-border-radius: 1.25rem;
   -ms-border-radius: 1.25rem;
   -o-border-radius: 1.25rem;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
 }
 
 .pagination a:hover {
@@ -656,8 +665,12 @@ form input[type="file"] {
   color: var(--color-red);
 }
 
-.form-50.buttons a:first-child {
+.form-50.buttons a:first-child, .no-games div a:first-child {
   margin-bottom: 1rem;
+}
+
+.no-games a{
+  display: block;
 }
 
 span.or {

@@ -67,16 +67,25 @@ export default {
   },
   methods: {
     getGame() {
+      this.$swal({
+        title: "Getting",
+        text: "Please, wait...",
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+      });
+      this.$swal.showLoading();
       this.axios
         .get(`/games/${this.$route.params.id}`)
         .then((res) => {
           this.game = res.data.game;
           this.canManage = res.data.canManage;
+          this.$swal.closeModal();
         })
         .catch((err) => {
           this.$router.push({
             name: "404",
           });
+          this.$swal.closeModal();
         });
     },
     deleteGameAlert() {
@@ -88,6 +97,13 @@ export default {
       })
         .then((result) => {
           if (result.isConfirmed) {
+            this.$swal({
+              title: "Deleting",
+              text: "Please, wait...",
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+            });
+            this.$swal.showLoading();
             return this.deleteGame();
           }
         })

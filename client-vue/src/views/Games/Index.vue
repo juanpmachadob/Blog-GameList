@@ -1,11 +1,24 @@
 <template>
   <main>
-    <div id="all-games" class="container">
+    <div v-if="total === 0" class="container card no-games">
+      <h2>Empty data</h2>
+      <p>There are no games added by anyone.</p>
+      <div>
+        <router-link :to="{ name: 'home' }" class="btn btn-secondary"
+          >Go home</router-link
+        >
+        <router-link
+          v-if="token"
+          :to="{ name: 'games.add' }"
+          class="btn btn-primary"
+          >Add new game</router-link
+        >
+      </div>
+    </div>
+    <div v-else id="all-games" class="container">
       <div class="description">
         <h2>All games</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, nemo!
-        </p>
+        <p>List of all games added to the website. What are you waiting for to add your favorite game?</p>
         <router-link
           v-if="token"
           :to="{ name: 'games.add' }"
@@ -43,7 +56,7 @@ export default {
     Paginator,
   },
   data: () => ({
-    total: 0,
+    total: null,
     limit: 10,
     games: [],
   }),
@@ -63,7 +76,7 @@ export default {
           this.$swal({
             icon: "error",
             title: "An error has ocurred.",
-            text: err,
+            text: err.response.data.msg ? err.response.data.msg : err,
           });
         });
     },

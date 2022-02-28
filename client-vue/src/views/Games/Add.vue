@@ -111,6 +111,13 @@ export default {
     },
     addGame() {
       this.errors.clearAll();
+      this.$swal({
+        title: "Adding",
+        text: "Please, wait...",
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+      });
+      this.$swal.showLoading();
       this.axios
         .post("/games", this.game, { headers: { "x-token": this.token } })
         .then((res) => {
@@ -121,7 +128,9 @@ export default {
             icon: "success",
             title: "Game registered successfully!",
           });
-          this.$router.push("/");
+          this.$router.push({
+            name: "games",
+          });
         })
         .catch((err) => {
           const errorData = err.response.data;

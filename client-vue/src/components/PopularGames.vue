@@ -2,10 +2,7 @@
   <main class="container">
     <div class="description">
       <h1>Popular games</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero,
-        temporibus.
-      </p>
+      <p>List of the top 10 most popular games with the most likes added on the website.</p>
     </div>
     <div class="popular-games flex-row" id="game-overflow">
       <GameItem

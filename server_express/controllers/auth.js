@@ -1,5 +1,5 @@
 const bcryptjs = require("bcryptjs");
-const { generateJWT } = require("../helpers");
+const { generateJWT, googleVerify } = require("../helpers");
 const User = require("../models/user");
 
 const register = async (req, res) => {
@@ -68,7 +68,49 @@ const login = async (req, res) => {
   }
 };
 
+const googleSignIn = async (req, res) => {
+  const { id_token } = req.body;
+  try {
+    const { name, email } = await googleVerify(id_token);
+
+    let user = await User.findOne({ email });
+
+    // If user doesn't exists
+    if (!user) {
+      const userData = {
+        name,
+        email,
+        password: "Google",
+        google: true,
+        role: "user",
+      };
+      user = new User(userData);
+      await user.save();
+    }
+
+    // If user is deleted
+    if (!user.status) {
+      return res.status(401).json({
+        msg: "User is deleted.",
+      });
+    }
+
+    // Generate JWT
+    const token = await generateJWT(user.id);
+
+    res.json({
+      user,
+      token,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      msg: "Token could not be verified",
+    });
+  }
+};
+
 module.exports = {
   register,
   login,
+  googleSignIn
 };

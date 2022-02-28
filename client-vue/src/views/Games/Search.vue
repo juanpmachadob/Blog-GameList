@@ -58,6 +58,12 @@ export default {
   methods: {
     searchGames() {
       const page = parseInt(this.$route.query.page) || 1;
+      this.$swal({
+        title: "Searching",
+        text: "Please, wait...",
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+      });
       this.axios
         .get(
           `/search/games/${this.$route.params.term}?page=${page}&limit=${this.limit}`
@@ -65,6 +71,7 @@ export default {
         .then((res) => {
           this.total = res.data.total;
           this.games = res.data.results;
+          this.$swal.closeModal();
         })
         .catch((err) => {
           this.$swal({
