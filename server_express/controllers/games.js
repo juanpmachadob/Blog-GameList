@@ -64,7 +64,7 @@ const gamesPut = async (req, res) => {
   const newGame = await Game.findByIdAndUpdate(
     id,
     {
-      title: title.toLowerCase(),
+      title,
       description,
       category,
     },

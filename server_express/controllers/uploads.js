@@ -5,6 +5,7 @@ const cloudinary = require("cloudinary").v2;
 cloudinary.config(process.env.CLOUDINARY_URL);
 
 const Game = require("../models/game");
+const folder = "Game-blog";
 
 const updateImageCloudinary = async (req, res) => {
   const { id, collection } = req.params;
@@ -27,10 +28,13 @@ const updateImageCloudinary = async (req, res) => {
 
   const oldImage = model.img;
   const { tempFilePath } = req.files.file;
-  const folder = "Game-blog";
-  const { secure_url } = await cloudinary.uploader.upload(tempFilePath, {
-    folder,
-  });
+  const { secure_url } = await cloudinary.uploader.upload(
+    tempFilePath,
+    // (allowed_formats = ["jpg", "png", "jpeg"]),
+    {
+      folder,
+    }
+  );
   model.img = secure_url;
   await model.save();
 

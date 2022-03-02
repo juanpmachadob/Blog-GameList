@@ -12,7 +12,8 @@ router.put(
   [
     validateJWT,
     validateFile,
-    check("id", "Invalid ID").isMongoId(),
+    check("id", "Invalid ID.").isMongoId(),
+    fieldValidation,
     check("collection").custom((c) => allowedCollections(c, ["games"])),
     fieldValidation,
   ],
@@ -22,7 +23,8 @@ router.put(
 router.get(
   "/:collection/:id",
   [
-    check("id", "Invalid ID").isMongoId(),
+    check("id", "Invalid ID.").isMongoId(),
+    fieldValidation,
     check("collection").custom((c) => allowedCollections(c, ["games"])),
     fieldValidation,
   ],
