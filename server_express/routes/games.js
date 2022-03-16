@@ -9,6 +9,7 @@ const {
   gamesPost,
   gamesPut,
   gamesDelete,
+  gamesLike,
 } = require("../controllers/games");
 
 const { validateJWT, fieldValidation } = require("../middlewares");
@@ -17,7 +18,8 @@ const {
   titleExists,
   gameExistsById,
   isAdminOrOwner,
-} = require("../helpers/database-validators");
+  checkCanManage,
+} = require("../helpers");
 
 const router = Router();
 
@@ -33,6 +35,7 @@ router.get(
     check("id", "Invalid game ID.").isMongoId(),
     fieldValidation,
     check("id").custom(gameExistsById),
+    checkCanManage,
     fieldValidation,
   ],
   gamesGetById
@@ -62,6 +65,17 @@ router.post(
     fieldValidation,
   ],
   gamesPost
+);
+
+router.post(
+  "/like/:id",
+  [
+    validateJWT,
+    check("id", "Invalid game ID.").isMongoId(),
+    // Check previous like doesnt exists
+    fieldValidation,
+  ],
+  gamesLike
 );
 
 router.put(

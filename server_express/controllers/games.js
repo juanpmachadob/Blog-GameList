@@ -1,4 +1,5 @@
 const Game = require("../models/game");
+const UserLike = require("../models/user_like");
 
 const gamesGet = async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
@@ -40,7 +41,7 @@ const gamesGetById = async (req, res) => {
   const game = await Game.findById(id)
     .populate("category", "name")
     .populate("user", "name");
-  res.json({ game, canManage: true });
+  res.json({ game, canManage: req.canManage });
 };
 
 const gamesPost = async (req, res) => {
@@ -85,6 +86,18 @@ const gamesDelete = async (req, res) => {
   res.json({ game });
 };
 
+const gamesLike = async (req, res) => {
+  const { id } = req.params;
+  
+  const userLike = new UserLike({
+    user: req.user.id,
+    game: id,
+  });
+
+  await userLike.save();
+  res.status(201).json({ userLike });
+};
+
 module.exports = {
   gamesGet,
   gamesGetPopular,
@@ -93,4 +106,5 @@ module.exports = {
   gamesPost,
   gamesPut,
   gamesDelete,
+  gamesLike,
 };
