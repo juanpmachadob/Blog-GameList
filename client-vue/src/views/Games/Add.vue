@@ -86,7 +86,6 @@ export default {
     handleFileUpload(event) {
       const file = event.target.files[0];
       this.file = file;
-      console.log(file);
 
       // File preview
       const reader = new FileReader();

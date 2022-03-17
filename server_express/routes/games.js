@@ -72,7 +72,8 @@ router.post(
   [
     validateJWT,
     check("id", "Invalid game ID.").isMongoId(),
-    // Check previous like doesnt exists
+    fieldValidation,
+    check("id").custom(gameExistsById),
     fieldValidation,
   ],
   gamesLike

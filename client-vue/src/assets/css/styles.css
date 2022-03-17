@@ -209,7 +209,7 @@ input[type="search"]::-webkit-search-results-decoration {
   align-items: center;
 }
 
-.nav-item.red{
+.nav-item.red {
   color: var(--color-red);
 }
 
@@ -244,7 +244,7 @@ main, section {
   padding-bottom: 1rem;
 }
 
-.description a{
+.description a {
   margin-right: 1rem;
   margin-bottom: 2rem;
 }
@@ -256,6 +256,7 @@ main, section {
 .popular-games {
   justify-content: space-between;
   overflow-x: hidden;
+  padding-bottom: 2rem;
 }
 
 .popular-games .game-item {
@@ -264,7 +265,7 @@ main, section {
   flex-shrink: 0;
 }
 
-.no-games p{
+.no-games p {
   margin-bottom: 1.5rem;
 }
 
@@ -286,15 +287,18 @@ main, section {
   position: relative;
 }
 
+.popular-games .game-image img {
+  height: 250px;
+}
+
 .game-image img {
-  width: 100%;
   max-width: 100%;
-  max-height: 250px;
   border-radius: 2rem 2rem 0 0;
   -webkit-border-radius: 2rem 2rem 0 0;
   -moz-border-radius: 2rem 2rem 0 0;
   -ms-border-radius: 2rem 2rem 0 0;
   -o-border-radius: 2rem 2rem 0 0;
+  object-fit: cover;
 }
 
 .game-image figcaption {
@@ -312,6 +316,11 @@ main, section {
   -moz-border-radius: 2rem;
   -ms-border-radius: 2rem;
   -o-border-radius: 2rem;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
 }
 
 .game-image figcaption.liked {
@@ -323,6 +332,52 @@ main, section {
   font-size: .75rem;
   position: relative;
   top: -2px;
+}
+
+.game-item .game-image figcaption {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 2rem 2rem 0 0;
+  -webkit-border-radius: 2rem 2rem 0 0;
+  -moz-border-radius: 2rem 2rem 0 0;
+  -ms-border-radius: 2rem 2rem 0 0;
+  -o-border-radius: 2rem 2rem 0 0;
+}
+
+.game-item .game-image figcaption{
+  text-align: center;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 4rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  transform-origin: bottom;
+  transition: transform 0.3s;
+  -webkit-transition: transform 0.3s;
+  -moz-transition: transform 0.3s;
+  -ms-transition: transform 0.3s;
+  -o-transition: transform 0.3s;
+  transform: scaleY(0);
+  -webkit-transform: scaleY(0);
+  -moz-transform: scaleY(0);
+  -ms-transform: scaleY(0);
+  -o-transform: scaleY(0);
+}
+
+.game-item .game-image figcaption i{
+  font-size: 1.25rem;
+  padding-top: 4px;
+  padding-right: .25rem;
+}
+
+.game-item .game-image:hover figcaption{
+  transform: scaleY(100%);
+  -webkit-transform: scaleY(100%);
+  -moz-transform: scaleY(100%);
+  -ms-transform: scaleY(100%);
+  -o-transform: scaleY(100%);
 }
 
 .game-description {
@@ -345,7 +400,6 @@ main, section {
 .pagination {
   display: flex;
   justify-content: flex-end;
-  margin-top: 1rem;
 }
 
 .pagination a {
@@ -545,13 +599,34 @@ main, section {
   padding: 2rem;
 }
 
-.game-page .game-image img{
+.game-page .game-image img {
   max-height: 100%;
 }
 
 .game-page .game-image figcaption {
   margin: 1.25rem 1.25rem 0 0;
   font-size: 1.5rem;
+  transition: transform 0.3s;
+  -webkit-transition: transform 0.3s;
+  -moz-transition: transform 0.3s;
+  -ms-transition: transform 0.3s;
+  -o-transition: transform 0.3s;
+}
+
+.game-page .game-image figcaption:hover {
+  transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  -o-transform: scale(1.05);
+}
+
+.game-page .game-image figcaption:active {
+  transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -moz-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  -o-transform: scale(0.95);
 }
 
 .game-image figcaption i {
@@ -657,7 +732,7 @@ form input[type="file"] {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M447.1 32h-384C28.64 32-.01 60.65-.01 96v320c0 35.35 28.65 64 63.1 64h384c35.35 0 64-28.65 64-64V96c.01-35.35-27.79-64-63.99-64zm-336 64c26.51 0 48 21.49 48 48s-20.6 48-48 48-48-21.49-48-48 22.38-48 48-48zm335 311.6c-2.8 5.2-8.2 8.4-14.1 8.4H82.01a15.993 15.993 0 0 1-14.26-8.75 16 16 0 0 1 1.334-16.68l70-96C142.1 290.4 146.9 288 152 288s9.916 2.441 12.93 6.574l32.46 44.51 93.3-139.1C293.7 194.7 298.7 192 304 192s10.35 2.672 13.31 7.125l128 192c3.29 4.875 3.59 11.175.79 16.475z'/%3E%3C/svg%3E");
 }
 
-.form-item span.errors{
+.form-item span.errors {
   display: block;
   margin-top: 2px;
   font-size: .95rem;
@@ -669,7 +744,7 @@ form input[type="file"] {
   margin-bottom: 1rem;
 }
 
-.no-games a{
+.no-games a {
   display: block;
 }
 
@@ -703,14 +778,15 @@ form .image-preview img:hover {
 }
 
 /* 404 */
-.page-404 h1{
+.page-404 h1 {
   font-size: 5rem;
 }
-.page-404 h3, .page-404 p:last-of-type{
+
+.page-404 h3, .page-404 p:last-of-type {
   margin-bottom: 2rem;
 }
 
-.page-404 p:first-of-type{
+.page-404 p:first-of-type {
   margin-bottom: 1rem;
 }
 

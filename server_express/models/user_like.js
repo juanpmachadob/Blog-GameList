@@ -10,10 +10,6 @@ const UserLikeSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: "Game",
     required: [true, "Game is required"],
-  },
-  date_liked: {
-    type: Date,
-    default: Date.now
   }
 });
 

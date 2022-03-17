@@ -5,7 +5,9 @@
         :src="`${axios.defaults.baseURL}/uploads/games/${_id}`"
         :alt="title"
       />
-      <figcaption>{{ likes }} <i class="fas fa-thumbs-up"> </i></figcaption>
+      <figcaption @click="sendShowPage()">
+        <i class="fas fa-thumbs-up"></i> {{ likes }}
+      </figcaption>
     </figure>
     <div class="game-description">
       <h3>{{ title }}</h3>
@@ -29,6 +31,16 @@ export default {
     title: { type: String, default: "" },
     description: { type: String, default: "" },
     likes: { type: Number, default: 0 },
+  },
+  methods: {
+    sendShowPage() {
+      this.$router.push({
+        name: "games.show",
+        params: {
+          id: this._id,
+        },
+      });
+    },
   },
 };
 </script>

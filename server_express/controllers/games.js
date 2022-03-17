@@ -38,10 +38,20 @@ const gamesGetOwned = async (req, res) => {
 
 const gamesGetById = async (req, res) => {
   const { id } = req.params;
-  const game = await Game.findById(id)
-    .populate("category", "name")
-    .populate("user", "name");
-  res.json({ game, canManage: req.canManage });
+  let query = {};
+
+  if (req.user) {
+    query = { game: id, user: req.user.id };
+  }
+
+  const [game, likes] = await Promise.all([
+    Game.findById(id).populate("category", "name").populate("user", "name"),
+    UserLike.findOne(query),
+  ]);
+
+  const liked = likes ? true : false;
+
+  res.json({ game, canManage: req.canManage, liked });
 };
 
 const gamesPost = async (req, res) => {
@@ -88,14 +98,25 @@ const gamesDelete = async (req, res) => {
 
 const gamesLike = async (req, res) => {
   const { id } = req.params;
-  
-  const userLike = new UserLike({
-    user: req.user.id,
-    game: id,
-  });
+  const query = { user: req.user.id, game: id };
 
-  await userLike.save();
-  res.status(201).json({ userLike });
+  let userLike = await UserLike.findOne(query);
+  const liked = userLike ? false : true;
+
+  if (!userLike) {
+    userLike = new UserLike(query);
+    await Promise.all([
+      userLike.save(),
+      Game.findByIdAndUpdate(id, { $inc: { likes: 1 } }),
+    ]);
+  } else {
+    await Promise.all([
+      userLike.remove(),
+      Game.findByIdAndUpdate(id, { $inc: { likes: -1 } }),
+    ]);
+  }
+
+  res.status(201).json({ liked });
 };
 
 module.exports = {
