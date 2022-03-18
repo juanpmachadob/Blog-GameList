@@ -292,6 +292,7 @@ main, section {
 }
 
 .game-image img {
+  max-height: 250px;
   max-width: 100%;
   border-radius: 2rem 2rem 0 0;
   -webkit-border-radius: 2rem 2rem 0 0;
@@ -345,9 +346,9 @@ main, section {
   -o-border-radius: 2rem 2rem 0 0;
 }
 
-.game-item .game-image figcaption{
+.game-item .game-image figcaption {
   text-align: center;
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   padding-bottom: 4rem;
@@ -366,13 +367,13 @@ main, section {
   -o-transform: scaleY(0);
 }
 
-.game-item .game-image figcaption i{
+.game-item .game-image figcaption i {
   font-size: 1.25rem;
   padding-top: 4px;
   padding-right: .25rem;
 }
 
-.game-item .game-image:hover figcaption{
+.game-item .game-image:hover figcaption {
   transform: scaleY(100%);
   -webkit-transform: scaleY(100%);
   -moz-transform: scaleY(100%);
@@ -860,6 +861,37 @@ form .image-preview img:hover {
 }
 
 @media (min-width: 768px) {
+  .game-item {
+    flex-basis: calc(33% - 1rem);
+  }
+
+  .container .game-list .game-item {
+    flex-basis: calc(50% - 1rem);
+    margin-bottom: 2rem;
+  }
+
+  .game-page .container {
+    flex-direction: row;
+  }
+
+  .game-main {
+    flex-basis: calc(66.6% - 1rem);
+  }
+
+  .game-aside {
+    flex-basis: calc(33% - 1rem);
+  }
+
+  .form-50.buttons a:first-child {
+    margin-bottom: 1rem;
+  }
+
+  .form-50.buttons {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 860px) {
   .navbar-content {
     flex-direction: row;
   }
@@ -908,37 +940,6 @@ form .image-preview img:hover {
     padding: 0 1rem;
   }
 
-  .game-item {
-    flex-basis: calc(33% - 1rem);
-  }
-
-  .container .game-list .game-item {
-    flex-basis: calc(50% - 1rem);
-    margin-bottom: 2rem;
-  }
-
-  .game-page .container {
-    flex-direction: row;
-  }
-
-  .game-main {
-    flex-basis: calc(66.6% - 1rem);
-  }
-
-  .game-aside {
-    flex-basis: calc(33% - 1rem);
-  }
-
-  .form-50.buttons a:first-child {
-    margin-bottom: 1rem;
-  }
-
-  .form-50.buttons {
-    flex-direction: column;
-  }
-}
-
-@media (min-width: 860px) {
   .form-50 {
     flex-direction: row;
   }

@@ -11,11 +11,13 @@ const routes = [
     path: "/auth/login",
     name: "login",
     component: () => import("../views/Auth/Login.vue"),
+    meta: { noAuth: true },
   },
   {
     path: "/auth/register",
     name: "register",
     component: () => import("../views/Auth/Register.vue"),
+    meta: { noAuth: true },
   },
   {
     path: "/games",
@@ -26,6 +28,12 @@ const routes = [
     path: "/games/owned",
     name: "games.owned",
     component: () => import("../views/Games/Owned.vue"),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/games/liked",
+    name: "games.liked",
+    component: () => import("../views/Games/Liked.vue"),
     meta: { requiresAuth: true },
   },
   {
@@ -68,8 +76,12 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const authRequired = to.matched.some((item) => item.meta.requiresAuth);
+  const noAuth = to.matched.some((item) => item.meta.noAuth);
 
-  if (authRequired && store.state.token === null) {
+  if (
+    (authRequired && store.state.token === null) ||
+    (noAuth && store.state.token !== null)
+  ) {
     next("/");
   } else {
     next();

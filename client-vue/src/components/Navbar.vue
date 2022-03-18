@@ -32,6 +32,9 @@
         <router-link :to="{ name: 'games' }" class="nav-item nav-separator-left"
           >All games</router-link
         >
+        <router-link v-if="token" :to="{ name: 'games.liked' }" class="nav-item"
+          >Liked games</router-link
+        >
         <router-link v-if="token" :to="{ name: 'games.owned' }" class="nav-item"
           >My games</router-link
         >
@@ -82,7 +85,7 @@ export default {
       }
     },
     showSearchInput() {
-      if (window.innerWidth <= 768) {
+      if (window.innerWidth < 860) {
         this.$swal({
           title: "Search game...",
           input: "text",
