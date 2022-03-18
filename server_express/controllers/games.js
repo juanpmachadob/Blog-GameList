@@ -36,6 +36,26 @@ const gamesGetOwned = async (req, res) => {
   res.json({ total, games });
 };
 
+const gamesGetLiked = async (req, res) => {
+  const { page = 1, limit = 10 } = req.query;
+  const skipIndex = (Number(page) - 1) * limit;
+  const query = { user: req.user.id };
+
+  // TODO: Only games with status true
+  const [total, games] = await Promise.all([
+    UserLike.countDocuments(query),
+    UserLike.find(query)
+      .populate("game")
+      .sort({ date_liked: -1 })
+      .limit(Number(limit))
+      .skip(skipIndex),
+  ]);
+  res.json({
+    total,
+    games: games.map((a) => a.game),
+  });
+};
+
 const gamesGetById = async (req, res) => {
   const { id } = req.params;
   let query = {};
@@ -49,7 +69,7 @@ const gamesGetById = async (req, res) => {
     UserLike.findOne(query),
   ]);
 
-  const liked = likes ? true : false;
+  const liked = likes && req.user ? true : false;
 
   res.json({ game, canManage: req.canManage, liked });
 };
@@ -123,6 +143,7 @@ module.exports = {
   gamesGet,
   gamesGetPopular,
   gamesGetOwned,
+  gamesGetLiked,
   gamesGetById,
   gamesPost,
   gamesPut,

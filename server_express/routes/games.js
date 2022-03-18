@@ -5,6 +5,7 @@ const {
   gamesGet,
   gamesGetPopular,
   gamesGetOwned,
+  gamesGetLiked,
   gamesGetById,
   gamesPost,
   gamesPut,
@@ -28,6 +29,8 @@ router.get("/", gamesGet);
 router.get("/popular", gamesGetPopular);
 
 router.get("/owned", [validateJWT], gamesGetOwned);
+
+router.get("/liked", [validateJWT], gamesGetLiked);
 
 router.get(
   "/:id",

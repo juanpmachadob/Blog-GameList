@@ -32,4 +32,9 @@ const GameSchema = Schema({
   },
 });
 
-module.exports = model("Games", GameSchema);
+GameSchema.methods.toJSON = function () {
+  const { __v, ...game } = this.toObject();
+  return game;
+};
+
+module.exports = model("Game", GameSchema);
