@@ -14,7 +14,7 @@
       </figcaption>
     </figure>
     <div class="game-description">
-      <h3>{{ title }}</h3>
+      <h2>{{ title }}</h2>
       <p>{{ String(description).substring(0, 120) + "..." }}</p>
       <div class="game-btn">
         <router-link

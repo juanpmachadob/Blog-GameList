@@ -77,7 +77,7 @@ h2 {
   margin: 0 0 1rem 0;
 }
 
-h3 {
+h3, .game-description h2 {
   font-size: 1.75rem;
   margin: 0 0 0.5rem 0;
 }
@@ -406,7 +406,7 @@ main, section {
   justify-content: flex-end;
 }
 
-.game-description h3, .game-info h1 {
+.game-description h2, .game-info h1 {
   text-transform: capitalize;
 }
 

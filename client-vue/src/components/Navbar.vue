@@ -3,7 +3,7 @@
     <div class="container navbar-content">
       <div class="navbar-head">
         <div class="logo" @click="$router.push('/')">
-        <img src="../assets/logo.png">
+        <img src="../assets/logo.png" alt="Blog GameList logo">
         <span>Gamelist</span>
         </div>
         <div class="mobile">
@@ -22,9 +22,9 @@
             ></i>
           </div>
           <div class="mobile-menu">
-            <a v-on:click="menuOpen = !menuOpen">
+            <span v-on:click="menuOpen = !menuOpen">
               <i class="fas fa-bars"></i>
-            </a>
+            </span>
           </div>
         </div>
       </div>
