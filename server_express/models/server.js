@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
@@ -16,6 +17,7 @@ class Server {
       categories: "/api/categories",
       games: "/api/games",
       uploads: "/api/uploads",
+      public: "../public/index.html",
     };
 
     this.connectDB();
@@ -54,6 +56,13 @@ class Server {
     this.app.use(this.paths.categories, require("../routes/categories"));
     this.app.use(this.paths.games, require("../routes/games"));
     this.app.use(this.paths.uploads, require("../routes/uploads"));
+    this.app.get("/robots.txt", function (req, res) {
+      res.type("text/plain");
+      res.send("User-agent: *");
+    });
+    this.app.get("*", (req, res) => {
+      res.sendFile(path.join(__dirname, this.paths.public));
+    });
   }
 
   listen() {

@@ -14,7 +14,6 @@
               class="search-btn"
               type="search"
               placeholder="Search..."
-              aria-valuemax="10"
             />
             <i
               @click="showSearchInput()"
