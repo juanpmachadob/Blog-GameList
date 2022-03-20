@@ -2,7 +2,10 @@
   <header class="navbar">
     <div class="container navbar-content">
       <div class="navbar-head">
-        <router-link to="/" class="logo">My game List</router-link>
+        <div class="logo" @click="$router.push('/')">
+        <img src="../assets/logo.png">
+        <span>Gamelist</span>
+        </div>
         <div class="mobile">
           <div class="search">
             <input

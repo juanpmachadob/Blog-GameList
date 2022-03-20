@@ -26,7 +26,7 @@ const gamesGetPopular = async (req, res) => {
 const gamesGetOwned = async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
   const skipIndex = (Number(page) - 1) * limit;
-  const query = { status: true, user: req.user.id };
+  const query = { user: req.user.id };
 
   const [total, games] = await Promise.all([
     Game.countDocuments(query),
@@ -41,7 +41,6 @@ const gamesGetLiked = async (req, res) => {
   const skipIndex = (Number(page) - 1) * limit;
   const query = { user: req.user.id };
 
-  // TODO: Only games with status true
   const [total, games] = await Promise.all([
     UserLike.countDocuments(query),
     UserLike.find(query)
@@ -50,6 +49,7 @@ const gamesGetLiked = async (req, res) => {
       .limit(Number(limit))
       .skip(skipIndex),
   ]);
+
   res.json({
     total,
     games: games.map((a) => a.game),
@@ -116,6 +116,18 @@ const gamesDelete = async (req, res) => {
   res.json({ game });
 };
 
+const gamesUndelete = async (req, res) => {
+  const { id } = req.params;
+  const game = await Game.findByIdAndUpdate(
+    id,
+    {
+      status: true,
+    },
+    { new: true }
+  );
+  res.json({ game });
+};
+
 const gamesLike = async (req, res) => {
   const { id } = req.params;
   const query = { user: req.user.id, game: id };
@@ -147,6 +159,6 @@ module.exports = {
   gamesGetById,
   gamesPost,
   gamesPut,
-  gamesDelete,
+  gamesDelete,gamesUndelete,
   gamesLike,
 };

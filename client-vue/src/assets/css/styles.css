@@ -5,15 +5,10 @@
   --color-background-first: #f9f9f9;
   --color-background-second: #f5f8fa;
   --color-background-projects-hover: rgba(255, 255, 255, 0.75);
-
-
   --color-title: #2c3e50;
   --color-text: #54585e;
-
-
   --color-light: #dddddd;
   --color-dark: #404449;
-
   --color-form-input: #EBEDEE;
   --color-white: #ffffff;
   --color-primary: #6b00d7;
@@ -199,7 +194,27 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.logo img {
+  margin: 0;
+  max-height: 40px;
+}
+
+.logo span {
+  content-visibility: hidden;
+  padding-left: 1rem;
   font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+.logo:hover {
+  filter: contrast(0.5);
+  -webkit-filter: contrast(0.5);
 }
 
 .navigation {
@@ -292,6 +307,7 @@ main, section {
 }
 
 .game-image img {
+  width: 100%;
   max-height: 250px;
   max-width: 100%;
   border-radius: 2rem 2rem 0 0;
@@ -604,6 +620,12 @@ main, section {
   max-height: 100%;
 }
 
+.game-image.deleted img, .game-image.deleted figcaption {
+  filter: grayscale(1);
+  -webkit-filter: grayscale(1);
+  cursor: default;
+}
+
 .game-page .game-image figcaption {
   margin: 1.25rem 1.25rem 0 0;
   font-size: 1.5rem;
@@ -802,6 +824,10 @@ form .image-preview img:hover {
   .paginator a {
     width: 40px;
   }
+
+  .logo span {
+    content-visibility: visible;
+  }
 }
 
 @media(min-width: 420px) {
@@ -896,6 +922,10 @@ form .image-preview img:hover {
     flex-direction: row;
   }
 
+  .logo span {
+    content-visibility: hidden;
+  }
+
   .mobile-menu {
     display: none;
   }
@@ -963,6 +993,10 @@ form .image-preview img:hover {
 }
 
 @media(min-width: 1010px) {
+  .logo span {
+    content-visibility: visible;
+  }
+
   .form-50.buttons {
     flex-direction: row;
   }

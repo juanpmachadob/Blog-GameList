@@ -27,6 +27,7 @@
           :title="game.title"
           :description="game.description"
           :likes="game.likes"
+          :status="game.status"
         />
       </div>
       <Paginator

@@ -128,7 +128,7 @@ export default {
     deleteGameAlert() {
       this.$swal({
         title: "¿Are you sure?",
-        text: `The game '${this.game.title}' will be removed.`,
+        text: `The game '${this.game.title}' will be deleted.`,
         icon: "warning",
         showCancelButton: true,
       })
@@ -162,7 +162,7 @@ export default {
         .then((res) => {
           this.$swal({
             icon: "success",
-            title: `The game '${res.data.game.title}' was removed.`,
+            title: `The game '${res.data.game.title}' was deleted.`,
           });
           this.$router.push("/");
         });

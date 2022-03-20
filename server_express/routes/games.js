@@ -10,6 +10,7 @@ const {
   gamesPost,
   gamesPut,
   gamesDelete,
+  gamesUndelete,
   gamesLike,
 } = require("../controllers/games");
 
@@ -122,6 +123,20 @@ router.delete(
     fieldValidation,
   ],
   gamesDelete
+);
+
+router.post(
+  "/undelete/:id",
+  [
+    validateJWT,
+    isAdminOrOwner,
+    check("id", "Invalid game ID.").isMongoId(),
+    fieldValidation,
+    check("id").custom(gameExistsById),
+    check("id").custom((id) => gameExistsById(id, false)),
+    fieldValidation,
+  ],
+  gamesUndelete
 );
 
 module.exports = router;

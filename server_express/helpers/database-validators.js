@@ -33,13 +33,18 @@ const categoryExistsById = async (id = "") => {
   }
 };
 
-const gameExistsById = async (id = "") => {
+const gameExistsById = async (id = "", mustExist = true) => {
   const game = await Game.findById(id);
   if (!game) {
     throw new Error(`Game ${id} doesn't exists.`);
   }
-  if (!game.status){
+  
+  if (!game.status && mustExist){
     throw new Error(`Game ${id} is deleted.`);
+  }
+
+  if (game.status && !mustExist){
+    throw new Error(`Game ${id} is not deleted.`);
   }
 };
 
