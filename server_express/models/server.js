@@ -8,7 +8,7 @@ const { dbConnection } = require("../database/config");
 class Server {
   constructor() {
     this.app = express();
-    this.port = process.env.PORT || 8080;
+    this.port = process.env.PORT || 5000;
 
     this.paths = {
       auth: "/api/auth",
@@ -56,13 +56,15 @@ class Server {
     this.app.use(this.paths.categories, require("../routes/categories"));
     this.app.use(this.paths.games, require("../routes/games"));
     this.app.use(this.paths.uploads, require("../routes/uploads"));
-    this.app.get("/robots.txt", function (req, res) {
-      res.type("text/plain");
-      res.send("User-agent: *");
-    });
-    this.app.get("*", (req, res) => {
-      res.sendFile(path.join(__dirname, this.paths.public));
-    });
+
+    // Production
+    // this.app.get("/robots.txt", function (req, res) {
+    //   res.type("text/plain");
+    //   res.send("User-agent: *");
+    // });
+    // this.app.get(/.*/, (req, res) => {
+    //   res.sendFile(path.join(__dirname, this.paths.public));
+    // });
   }
 
   listen() {

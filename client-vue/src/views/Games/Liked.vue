@@ -1,14 +1,6 @@
 <template>
   <main>
-    <div v-if="total === 0" class="container card no-games">
-      <h2>Empty data</h2>
-      <p>There are no games liked by you.</p>
-      <div>
-        <router-link :to="{ name: 'home' }" class="btn btn-secondary"
-          >Go home</router-link
-        >
-      </div>
-    </div>
+    <EmptyData v-if="total === 0" />
     <div v-else id="all-games" class="container">
       <div class="description">
         <h2>Games liked by you</h2>
@@ -42,10 +34,13 @@
 
 <script>
 import { mapState } from "vuex";
+import EmptyData from "@/components/EmptyData.vue";
 import GameItem from "@/components/GameItem.vue";
 import Paginator from "@/components/Paginator.vue";
+
 export default {
   components: {
+    EmptyData,
     GameItem,
     Paginator,
   },

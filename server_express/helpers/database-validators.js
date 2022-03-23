@@ -3,17 +3,27 @@ const Category = require("../models/category");
 const Game = require("../models/game");
 
 const emailExists = async (email = "") => {
-  const exists = await User.findOne({ email: email.toLowerCase() });
+  const exists = await User.findOne({ email });
   if (exists) {
     throw new Error(`Email already exists.`);
   }
 };
 
-const titleExists = async (title = "") => {
-  const exists = await Game.findOne({ title: title.toLowerCase() });
-  if (exists) {
-    throw new Error(`Game title already exists.`);
+const titleExists = async (req, res, next) => {
+  const { title } = req.body;
+  const exists = await Game.findOne({ title });
+  if (exists && req.params.id) {
+    const game = await Game.findById(req.params.id);
+    if (game.title !== title.toLowerCase()) {
+      return res.status(400).json({ msg: "Game title already exists." });
+    }
   }
+
+  if (exists && !req.params.id) {
+    return res.status(400).json({ msg: "Game title already exists." });
+  }
+
+  next();
 };
 
 const userExistsById = async (id = "") => {
@@ -38,12 +48,12 @@ const gameExistsById = async (id = "", mustExist = true) => {
   if (!game) {
     throw new Error(`Game ${id} doesn't exists.`);
   }
-  
-  if (!game.status && mustExist){
+
+  if (!game.status && mustExist) {
     throw new Error(`Game ${id} is deleted.`);
   }
 
-  if (game.status && !mustExist){
+  if (game.status && !mustExist) {
     throw new Error(`Game ${id} is not deleted.`);
   }
 };

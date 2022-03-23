@@ -96,16 +96,25 @@ export default {
   },
   methods: {
     getGame() {
+      this.$swal({
+        title: "Getting",
+        text: "Please, wait...",
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+      });
+      this.$swal.showLoading();
       this.axios
         .get(`/games/${this.$route.params.id}`)
         .then((res) => {
           this.game = res.data.game;
           this.game.category = res.data.game.category._id;
+          this.$swal.closeModal();
         })
         .catch((err) => {
           this.$router.push({
             name: "404",
           });
+          this.$swal.closeModal();
         });
     },
     handleFileUpload(event) {
@@ -149,17 +158,21 @@ export default {
         .then((res) => {
           if (this.file) {
             return this.uploadImage(res.data.newGame._id);
+          } else {
+            this.$swal({
+              icon: "success",
+              title: "Game modified successfully!",
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.$router.push({
+                  name: "games.show",
+                  params: { id: this.$route.params.id },
+                });
+              }
+            });
           }
-        })
-        .then((res) => {
-          this.$swal({
-            icon: "success",
-            title: "Game modified successfully!",
-          });
-          this.$router.push({
-            name: "games.show",
-            params: { id: this.$route.params.id },
-          });
         })
         .catch((err) => {
           const errorData = err.response.data;
@@ -184,12 +197,40 @@ export default {
     uploadImage(_id) {
       const formData = new FormData();
       formData.append("file", this.file);
-      return this.axios.put(`/uploads/games/${_id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "x-token": this.token,
-        },
-      });
+      return this.axios
+        .put(`/uploads/games/${_id}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "x-token": this.token,
+          },
+        })
+        .then((res) => {
+          this.$swal({
+            icon: "success",
+            title: "Game modified successfully!",
+          });
+        })
+        .catch((err) => {
+          const errorData = err.response.data;
+          let msg = "";
+          if (errorData.msg) {
+            msg = errorData.msg;
+          } else {
+            msg = err;
+          }
+
+          this.$swal({
+            icon: "warning",
+            title: `Game modified without image.`,
+            text: msg,
+          });
+        })
+        .finally(() => {
+          this.$router.push({
+            name: "games.show",
+            params: { id: this.$route.params.id },
+          });
+        });
     },
   },
   computed: {

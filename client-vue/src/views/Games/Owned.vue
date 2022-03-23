@@ -1,24 +1,13 @@
 <template>
   <main>
-    <div v-if="total === 0" class="container card no-games">
-      <h2>Empty data</h2>
-      <p>There are no games added by you.</p>
-      <div>
-        <router-link :to="{ name: 'home' }" class="btn btn-secondary"
-          >Go home</router-link
-        >
-        <router-link
-          v-if="token"
-          :to="{ name: 'games.add' }"
-          class="btn btn-primary"
-          >Add new game</router-link
-        >
-      </div>
-    </div>
+    <EmptyData v-if="total === 0" />
     <div v-else id="all-games" class="container">
       <div class="description">
         <h2>Games added by you</h2>
-        <p>List of all games added by you on the website. Thank you for adding each of these!</p>
+        <p>
+          List of all games added by you on the website. Thank you for adding
+          each of these!
+        </p>
         <router-link
           v-if="token"
           :to="{ name: 'games.add' }"
@@ -49,10 +38,13 @@
 
 <script>
 import { mapState } from "vuex";
+import EmptyData from "@/components/EmptyData.vue";
 import GameItem from "@/components/GameItem.vue";
 import Paginator from "@/components/Paginator.vue";
+
 export default {
   components: {
+    EmptyData,
     GameItem,
     Paginator,
   },

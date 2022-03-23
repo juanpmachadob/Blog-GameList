@@ -59,7 +59,6 @@ export default {
       }
     },
     undeleteGameAlert() {
-      console.log(this.$route.name)
       this.$swal({
         title: "¿Are you sure?",
         text: `The game '${this.title}' will be undeleted.`,

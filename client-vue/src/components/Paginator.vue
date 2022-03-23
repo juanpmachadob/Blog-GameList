@@ -25,7 +25,9 @@
     </li>
     <!-- Current page -->
     <li v-if="totalPages > 1" class="selected">
-      <a>{{ currentPage }}</a>
+      <router-link :to="{ query: { page: currentPage } }">{{
+        currentPage
+      }}</router-link>
     </li>
     <!-- Current page + 1 -->
     <li v-if="currentPage < totalPages - 1">
@@ -49,7 +51,7 @@
         :to="{ query: { page: totalPages - 1 } }"
         >{{ totalPages - 1 }}</router-link
       >
-      <a>...</a>
+      <router-link :to="{ query: { page: currentPage } }">...</router-link>
     </li>
     <!-- Last page -->
     <li v-if="currentPage < totalPages">

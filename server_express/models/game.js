@@ -4,6 +4,7 @@ const GameSchema = Schema({
   title: {
     type: String,
     required: [true, "Title is required"],
+    lowercase: true,
   },
   description: {
     type: String,
@@ -19,6 +20,10 @@ const GameSchema = Schema({
   status: {
     type: Boolean,
     default: true,
+  },
+  date_added: {
+    type: Date,
+    default: Date.now,
   },
   category: {
     type: Schema.Types.ObjectId,

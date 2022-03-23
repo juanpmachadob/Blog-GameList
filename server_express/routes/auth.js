@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 
-const { fieldValidation, matchingPasswords } = require("../middlewares");
+const { fieldValidation } = require("../middlewares");
 const { emailExists } = require("../helpers");
 
 const { register, login, googleSignIn } = require("../controllers/auth");
@@ -12,6 +12,10 @@ router.post(
   "/register",
   [
     check("name", "Name is required.").not().isEmpty(),
+    check("name", "Name must be between 2 to 32 characters.").isLength({
+      min: 2,
+      max: 32,
+    }),
     check(
       "password",
       "Password must be at least 8 characters long and must contain letters in mixed case, numbers and special characters."

@@ -18,6 +18,11 @@ const options = {
 app.use(router).use(store).use(VueAxios, axios).use(VueSweetalert2, options);
 
 app.config.globalProperties.axios = axios;
+
+// Development
 axios.defaults.baseURL = "http://localhost:5000/api";
+
+// Production
+// axios.defaults.baseURL = `/api`;
 
 app.mount("#app");

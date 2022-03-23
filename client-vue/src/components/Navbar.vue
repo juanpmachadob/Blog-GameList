@@ -31,18 +31,18 @@
         class="navigation"
         v-bind:class="{ 'mobile-menu-active': !menuOpen }"
       >
-        <router-link :to="{ name: 'games' }" class="nav-item nav-separator-left"
+        <router-link :to="{ name: 'games' }" @click="menuOpen = false" class="nav-item nav-separator-left"
           >All games</router-link
         >
-        <router-link v-if="token" :to="{ name: 'games.liked' }" class="nav-item"
+        <router-link v-if="token" :to="{ name: 'games.liked' }" @click="menuOpen = false" class="nav-item"
           >Liked games</router-link
         >
-        <router-link v-if="token" :to="{ name: 'games.owned' }" class="nav-item"
+        <router-link v-if="token" :to="{ name: 'games.owned' }" @click="menuOpen = false" class="nav-item"
           >My games</router-link
         >
         <router-link
           v-if="token"
-          @click="logout()"
+          @click="logout(); menuOpen = false;"
           to="/"
           class="nav-item red nav-separator-left"
           >Logout</router-link
@@ -50,10 +50,11 @@
         <router-link
           v-if="!token"
           :to="{ name: 'login' }"
+          @click="menuOpen = false"
           class="nav-item nav-separator-left"
           >Sign In</router-link
         >
-        <router-link v-if="!token" :to="{ name: 'register' }" class="nav-item"
+        <router-link v-if="!token" :to="{ name: 'register' }" @click="menuOpen = false" class="nav-item"
           >Sign Up</router-link
         >
       </nav>

@@ -8,7 +8,7 @@ const gamesGet = async (req, res) => {
 
   const [total, games] = await Promise.all([
     Game.countDocuments(query),
-    Game.find(query).limit(Number(limit)).skip(skipIndex),
+    Game.find(query).sort({ date_added: 1 }).limit(Number(limit)).skip(skipIndex),
   ]);
 
   res.json({ total, games });
@@ -30,7 +30,7 @@ const gamesGetOwned = async (req, res) => {
 
   const [total, games] = await Promise.all([
     Game.countDocuments(query),
-    Game.find(query).sort({ likes: -1 }).limit(Number(limit)).skip(skipIndex),
+    Game.find(query).sort({ date_added: -1 }).limit(Number(limit)).skip(skipIndex),
   ]);
 
   res.json({ total, games });
@@ -79,7 +79,7 @@ const gamesPost = async (req, res) => {
   const { title, description, category } = req.body;
 
   const game = new Game({
-    title: title.toLowerCase(),
+    title,
     description,
     category,
     user: user._id,
